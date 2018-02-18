@@ -1,0 +1,234 @@
+ R←Test_0001(stopFlag batchFlag);buffer;filename;myIni2;data;myIni1;myIni;names;buf1;buf2;flag;⎕TRAP
+⍝ Test function for all sorts of things.
+⍝ (Ill-designed I am afraid: this function tests lots of things, more than it should)
+ R←∆Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ filename←'TestCases/INI01.ini'
+
+⍝⍝⍝ Check I. - data integrity
+ 1 ⎕NDELETE filename
+ myIni←⎕NEW ##.IniFiles
+ myIni['Config:no1']←1
+ myIni['Config:vec1']←⊂1 2 3
+ myIni['Config:str1']←⊂'hello, universe'
+ myIni.Save filename  ⍝ FILE NAME ERROR?! run ⎕LX!
+
+ myIni1←⎕NEW ##.IniFiles(,⊂filename)
+ data←myIni1.Get ⍬ ⍬
+ →FailsIf'CONFIG'≢⎕IO⊃,data                                 ⍝ first element must be "Config"
+ →FailsIf 4 3≢⍴data                                         ⍝ Shape'
+ →FailsIf('no1' 'vec1' 'str1')≢1↓data[;⎕IO+1]               ⍝ Check the keys'
+ →FailsIf(1(1 2 3)'hello, universe')≢1↓data[;⎕IO+2]         ⍝ Check the data'
+
+ myIni1['Config:vec1']←9999
+ myIni1.Save filename
+ myIni1←⎕NEW ##.IniFiles(,⊂filename)
+ →FailsIf 9999≠myIni1[⊂'Config:vec1']                       ⍝ updating an existing value does not work
+
+ ⍝ Check II.  - functions and data integrity
+ 1 ⎕NDELETE filename
+ buffer←''
+ buffer,←⊂'[Config]'
+ buffer,←⊂'no1=1'
+ buffer,←⊂'vec1=1 2 3'
+ buffer,←⊂'txt=''hello, universe'''
+ buffer,←⊂'[PATH]'
+ buffer,←⊂'home=''C:\Home\'''
+ buffer,←⊂'path1=''{home},mypath\'''
+ buffer,←⊂'path1=''{home},yourpath\'''
+ buffer,←⊂'[Config]'
+ buffer,←⊂'no1=2'               ⍝ Overwrite
+ buffer,←⊂'vec2=4 5 6'          ⍝ Add
+ #.APLTreeUtils.WriteUtf8File filename buffer
+
+ myIni2←⎕NEW ##.IniFiles(,⊂filename)
+ →FailsIf 2≠⍴(⊂'')~⍨{⍵[;⎕IO]}myIni2.Get ⍬ ⍬                 ⍝ Two Sections?
+ ⍝ "Get"
+ →FailsIf 8 3≢⍴myIni2.Get ⍬ ⍬                               ⍝ Shape
+
+ names←{⍵[;⎕IO]}myIni2.Get'CONFIG'⍬
+ ⍝ "Indexing"
+ buf1←'CONFIG'∘{myIni2.Get ⍺ ⍵}¨names
+ buf2←'CONFIG'∘{myIni2[⊂⍺,':',⍵]}¨names
+ →FailsIf∨/buf1≢¨buf2                                       ⍝ Get and [] return different results for [CONFIG]
+ names←{⍵[;⎕IO]}myIni2.Get'PATH'⍬
+ buf1←'Path'∘{myIni2.Get ⍺ ⍵}¨names
+ buf2←'PaTH'∘{myIni2[⊂⍺,':',⍵]}¨names
+ flag←0
+ :Trap 0
+     myIni2.Get('Config' 'no1')('Path' 'home')
+     →FailsIf 1
+ :Else
+     flag←'Invalid syntax!'≢⎕IO⊃⎕DM
+     flag∨←11≠⎕EN
+ :EndTrap
+ →FailsIf flag                                              ⍝ invalid syntax not recognized
+ →FailsIf∨/buf1≢¨buf2                                       ⍝ Get and [] return different results in [Path]
+ ⍝ "Exist"
+ →FailsIf 0≠myIni2.Exist'Config:no999'                      ⍝ Does not exist!
+ →FailsIf 1≠myIni2.Exist'Config:no1'                        ⍝ _Does_  exist!
+ →FailsIf 1≠myIni2.Exist'Config:'                           ⍝ _Does_ exist!
+ →FailsIf 0≢myIni2.Exist'unknown:'                          ⍝ Does _not_  exist!
+ flag←0
+ :Trap 0 ⍝ Mixed syntax is NOT supported:
+     {}myIni2.Exist'Config:no1'('Config' 'unknown')
+     →FailsIf 1
+ :Else
+     flag←'Mixed syntax not eligible'≢⎕IO⊃⎕DM
+     flag∨←11≠⎕EN
+ :EndTrap
+ →FailsIf flag                                              ⍝ mixed syntax should get signalled
+ →FailsIf 0 1≢myIni2.Exist'Config:unknown'('Config:no1')
+ →FailsIf 1 0≢myIni2.Exist'Config:' 'Config:unknown'
+ →FailsIf 1 1≢myIni2.Exist'Config:' 'path:'
+ →FailsIf 1 1≢myIni2.Exist('Config' 'no1')('path' '')
+ →FailsIf 0 0≢myIni2.Exist('unknown' 'unknown')('unknown' '')
+ →FailsIf 1 0 1≢myIni2.Exist(⊂⊂'Config'),¨⊂¨('no1' 'unknown' 'vec1')
+
+ ⍝ "Put"
+ 4 myIni2.Put'Config' 'no1'
+ →FailsIf 4≢myIni2[⊂'Config:no1']                           ⍝ We just wrote this?! Also: must be a scalar!
+ 5 myIni2.Put'Config:no1'
+ →FailsIf 5≢myIni2[⊂'Config:no1']                           ⍝ We just wrote this?! Also: must be a scalar!
+ (,4)myIni2.Put'Config:no1'
+ 'I am new'myIni2.Put'Config' 'newText'
+ →FailsIf'I am new'≢⎕IO⊃,myIni2.Get'Config' 'newText'       ⍝ Just added value is not there?!
+ myIni2[⊂'Config' 'newText2']←⊂'I am also new'
+ →FailsIf'I am also new'≢⊃myIni2.Get'Config' 'newText2'     ⍝ Just added value is not there?!
+ →FailsIf(,4)≢⎕IO⊃myIni2[,⊂'Config:no1']                    ⍝ We just wrote this?!
+ myIni2[⊂'Config' 'newText3']←⊂'And I am new as well'
+ →FailsIf'And I am new as well'≢⊃myIni2.Get'Config' 'newText3'   ⍝ Just added value is not there?!
+ →FailsIf 1≠⍴myIni2[,⊂'Config:no1']                         ⍝ Must be a vector!
+ myIni2[⊂'Config' 'newText4']←⊂'Still new' ⍝ needed...
+ myIni2[⊂'Config' 'newText5']←⊂'Still new' ⍝...for...
+ myIni2[⊂'Config' 'newText6']←⊂'Still new' ⍝...the "Delete"...
+ myIni2[⊂'Config' 'newText7']←⊂'Still new' ⍝...test!
+ ⍝ "Assign"
+ myIni2['Path:Valid1' 'Path:Valid2']←(1 2 3)' '
+ ⍝ "Save"
+ ⎕DL 0.2
+ myIni2.Save filename
+ →FailsIf(1 2 3)' '≢myIni2['Path:Valid1' 'Path:Valid2']     ⍝ Data dont ∆Match!
+ ⍝ "AddSection"
+ ⍝ Try an invalid name which is made valid inside the class:
+ myIni2.AddSection'999'
+ ⍝ Try a REALLY invalid name
+ :Trap 11
+     myIni2.AddSection'9..99'
+     →FailsIf 1
+ :Else
+     →FailsIf'Section name must be a valid APL name'{⍺≢(⍴⍺)↑⊃,/⍵}⎕DM   ⍝ Something is wrong- check check for valid names
+ :EndTrap
+ →FailsIf 0=myIni2.AddSection'Path2'                        ⍝ Shoudn''t exist but does.
+ →FailsIf 1=myIni2.AddSection'Path2'                        ⍝ Shoudn exist but doesn''t.
+ →FailsIf(#.APLTreeUtils.Uppercase'Config' 'PATH' '999' 'Path2')≢{⍵/⍨0<⍬∘⍴¨⍴¨⍵}{⍵[;⎕IO]}myIni2.Get ⍬ ⍬  ⍝ Something is wrong with the sections!
+ myIni2[⊂'Path2:my']←⊂'Kai Jaeger'
+ →FailsIf 1 2≢⍴myIni2.Get'Path2'⍬                           ⍝ Something is wrong with new section "path2"
+ →FailsIf 0≠myIni2.AddSection'Path2'                        ⍝ Does already exist and therefore should fail' ⍝ Add again
+ →FailsIf 1 2≢⍴myIni2.Get'Path2'⍬                           ⍝ Something is wrong with new section "path2"
+ myIni2.Delete'Path2:'
+ →FailsIf 0≠myIni2.Exist'Path2:'                            ⍝ "path2" got just deleted
+ ⍝ Request "Default"
+ flag←0
+ :Trap 0
+     myIni2.Default ⍝ not defined, must cause a VALUE ERROR!
+     flag←1
+ :Else
+     flag←6≠⎕EN
+     flag∨←'No default defined!'≢⎕IO⊃⎕DM
+ :EndTrap
+ →FailsIf flag                                              ⍝ Something is wrong with "Default"!
+ ⍝ Set "Default"
+ myIni2.Default←¯1 ¯1
+ →FailsIf ¯1 ¯1≢myIni2.Default                              ⍝ Default is not what it should be!
+ →FailsIf(⊂¯1 ¯1)≢myIni2[⊂'CONFIG:Unknown']                 ⍝ Default was not returned but should!
+ →FailsIf(⊂¯1 ¯1)≢myIni2.Get'Config:Unknown'                ⍝ Default was not returned but should!
+ →FailsIf(⊂¯2 ¯2)≢(¯2 ¯2)myIni2.Get'CONFIG' 'Unknown'       ⍝ Default was not returned but should!
+ flag←0
+ :Trap 0
+     →FailsIf ¯1 ¯1≢myIni2.Get'Unknown:Unknown'             ⍝ Default was not returned but should!
+     →FailsIf 1
+ :Else
+     flag←'Unknown section'≢⎕IO⊃⎕DM
+     flag∨←6≠⎕EN
+ :EndTrap
+ →FailsIf flag                                              ⍝ Something is wrong with "Default"!
+ →FailsIf(2⍴⊂¯1 ¯1)≢myIni2.Get'CONFIG'('Unknown' 'Unknown2') ⍝ Default was not returned but should!
+ →FailsIf((¯1 ¯1)(1 2 3))≢myIni2.Get'CONFIG'('Unknown' 'vec1')  ⍝ Default was not returned but should!
+ ⍝ "DeleteDefault"
+ myIni2.DeleteDefault
+ flag←0
+ :Trap 0
+     myIni2.Default ⍝ not defined, must cause a VALUE ERROR!
+     →FailsIf 1
+ :Else
+     flag←6≠⎕EN
+     flag∨←'No default defined!'≢⎕IO⊃⎕DM
+ :EndTrap
+ →FailsIf flag                                               ⍝ Something is wrong witht "Default"!
+ ⍎(11 2≢⍴myIni2.Get'Config'⍬)/'. ⍝ Check values of section "Config"'
+ ⍝ "Delete"
+ myIni2.Delete'Config:newText'
+ →FailsIf 10 2≢⍴myIni2.Get'Config'⍬                         ⍝ Check values of section "Config"
+ myIni2.Delete'Config'('newText2' 'newText3')
+ →FailsIf 8 2≢⍴myIni2.Get'Config'⍬                          ⍝ Check values of section "Config"
+ myIni2.Delete('Config' 'newText4')('Config:newText5')
+ →FailsIf 6 2≢⍴myIni2.Get'Config'⍬                          ⍝ Check values of section "Config"
+ myIni2.Delete('Config:newText6')('Config:newText7')
+ →FailsIf 4 2≢⍴myIni2.Get'Config'⍬                          ⍝ Check values of section "Config"
+ flag←0
+ :Trap 0
+     myIni2.Delete('Config:newText6')('Config' 'newText7')
+     →FailsIf 1
+ :Else
+     flag←'Invalid right argument'≢⎕IO⊃⎕DM
+     flag∨←11≠⎕EN
+ :EndTrap
+ →FailsIf flag                                              ⍝ mixed syntax should get signalled
+
+ myIni2['Path:Valid1' 'Path:Valid2']←(1 2 3)''
+ myIni2.Save filename
+ →FailsIf(1 2 3)''≢myIni2['Path:Valid1' 'Path:Valid2']      ⍝ Data dont ∆Match!
+
+ myIni2['Path:Invalid1' 'Path:Invalid2']←(⊂1 2 3)''
+ myIni2['Path:Invalid1' 'Path:Invalid2']←(⊂'Kai Jaeger')((1 2 3)(200 300))
+
+ :Trap 11
+     myIni2['Path:Invalid1' 'Path:Invalid2']←(⊂⊂1 2 3)''
+     →FailsIf 1
+ :Else
+     ⍎('Invalid depth'≢⎕IO⊃⎕DM)/'. ⍝ Something is wrong'
+ :EndTrap
+
+ :Trap 11
+     myIni2['Path:Invalid1' 'Path:Invalid2']←(⊂⊂'Kai Jaeger')((1 2 3)(200 300))
+     →FailsIf 1
+ :Else
+     →FailsIf'Invalid depth'≢⎕IO⊃⎕DM                        ⍝ Something is wrong
+ :EndTrap
+
+⍝ Test for a non-existent ini file:
+ :Trap 0
+     myIni1←⎕NEW ##.IniFiles(,⊂'TestCases\doesnotexist.ini')
+     →FailsIf 1                                             ⍝ File does not exist - must crash therefore
+ :EndTrap
+
+ ⍝ Test for an existing ini file which does not contain a section: (supported since version 1.4)
+ myIni1←⎕NEW ##.IniFiles(,⊂'TestCases\NoSection.ini')
+ myIni1.AddSection'mySec'
+ 'jaeger'myIni1.Put'mysec:kai'
+ myIni1[⊂'mysec:thomas']←⊂'max'
+ →FailsIf('MYSEC' '' '' '' 'kai' 'jaeger' '' 'thomas' 'max')≢,myIni1.Get ⍬ ⍬    ⍝ something is wrong here
+
+ ⍝ Test for an existing ini file which does not contain anything at all
+ filename←'TestCases\Empty.ini'
+ #.APLTreeUtils.WriteUtf8File filename''
+ myIni1←⎕NEW ##.IniFiles(,⊂filename)
+ myIni1.AddSection'Config'
+ myIni1[⊂'Config:msg']←⊂'That''s fine!'
+ myIni1.Save filename
+ myIni2←⎕NEW ##.IniFiles(,⊂filename)
+ →FailsIf(myIni1.Get ⍬ ⍬)≢(myIni2.Get ⍬ ⍬)                  ⍝ Should ∆Match, really!
+ #.APLTreeUtils.WriteUtf8File filename''
+
+ R←∆OK

@@ -1,0 +1,15 @@
+ R←Test_Faulty_03(stopFlag batchFlag);filename;myIni;⎕TRAP
+⍝ Process faulty_sample_3.ini which is invalid: missing closing curly.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ filename←'TestCases/faulty_sample_3.ini'
+
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(,⊂filename)
+     →FailsIf 1
+ :Else
+     →FailsIf('Check line 4 of ','TestCases/faulty_sample_3.ini'){⍺≢(⍴⍺)↑⍵}⎕IO⊃⎕DM
+ :EndTrap
+
+ R←∆OK

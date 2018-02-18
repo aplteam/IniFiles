@@ -1,0 +1,83 @@
+ R←Test_0101(stopFlag batchFlag);buffer;filename;myIni;DenyIP;AcceptIP;vec2;vec1;no1;no2;⎕TRAP
+⍝ Check the "concatenate" syntax (results in nested vectors in APL).
+ R←∆Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ filename←'TestCases/INI02.ini'
+
+ DenyIP←'2001:0db8:0000:0000:0000:0000:1428:57ab' '2001:0db8:0000:0000:0000::1428:57ab' '2001:0db8:0:0:0:0:1428:57ab' '2001:0db8:0:0::1428:57ab' '2001:0db8::1428:57ab' '2001:db8::1428:57ab'
+ AcceptIP←'127.0.0.1' '192.1.1.2' '85.10.12.23'
+ no1←¯23
+ no2←,1234.23
+ vec1←1000 2000 3000
+ vec2←11.2 11.3 12.45
+
+⍝⍝⍝ Define environment
+ 1 ⎕NDELETE filename
+ myIni←⎕NEW ##.IniFiles
+ myIni['Config:DenyIP']←⊂DenyIP
+ myIni['Config:AcceptIP']←⊂AcceptIP
+ myIni['Config:no1']←⊂no1
+ myIni['Config:no2']←⊂no2
+ myIni['Config:vec1']←⊂vec1
+ myIni['Config:vec2']←⊂vec2
+ myIni.Save filename
+
+ ⎕EX'myIni'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+
+ →FailsIf DenyIP≢⊃myIni.Get'Config' 'DenyIP'
+ →FailsIf AcceptIP≢⊃myIni.Get'Config' 'AcceptIP'
+
+ →FailsIf DenyIP≢⊃myIni[⊂'Config:DenyIP']
+ →FailsIf AcceptIP≢⊃myIni[⊂'Config:AcceptIP']
+ →FailsIf AcceptIP DenyIP≢myIni['Config:AcceptIP' 'Config:DenyIP']
+
+ →FailsIf vec1≢⊃myIni.Get'Config' 'vec1'
+ →FailsIf vec2≢⊃myIni.Get'Config' 'vec2'
+
+ →FailsIf vec1≢⊃myIni[⊂'Config:vec1']
+ →FailsIf vec2≢⊃myIni[⊂'Config:vec2']
+ →FailsIf vec1 vec2≢myIni['Config:vec1' 'Config:vec2']
+
+ →FailsIf no1≢myIni[⊂'Config:no1']
+ →FailsIf no1≢⊃myIni[⊂'Config:no1']
+ →FailsIf(''⍴no2)≢⊃myIni[⊂'Config:no2']
+ →FailsIf(''⍴no2)≢⊃myIni[⊂'Config:no2']
+
+⍝⍝⍝ The same with the "AddSection" and the "Put" method
+ 1 ⎕NDELETE filename
+ myIni←⎕NEW ##.IniFiles
+ myIni.AddSection'Config'
+ DenyIP myIni.Put'Config:DenyIP'
+ AcceptIP myIni.Put'Config:AcceptIP'
+ no1 myIni.Put'Config:no1'
+ no2 myIni.Put'Config:no2'
+ vec1 myIni.Put'Config:vec1'
+ vec2 myIni.Put'Config:vec2'
+ myIni.Save filename
+
+ ⎕EX'myIni'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+
+ →FailsIf DenyIP≢⊃myIni.Get'Config' 'DenyIP'
+ →FailsIf AcceptIP≢⊃myIni.Get'Config' 'AcceptIP'
+
+ →FailsIf DenyIP≢⊃myIni[⊂'Config:DenyIP']
+ →FailsIf AcceptIP≢⊃myIni[⊂'Config:AcceptIP']
+ →FailsIf AcceptIP DenyIP≢myIni['Config:AcceptIP' 'Config:DenyIP']
+
+ →FailsIf vec1≢⊃myIni.Get'Config' 'vec1'
+ →FailsIf vec2≢⊃myIni.Get'Config' 'vec2'
+
+ →FailsIf vec1≢⊃myIni[⊂'Config:vec1']
+ →FailsIf vec2≢⊃myIni[⊂'Config:vec2']
+ →FailsIf vec1 vec2≢myIni['Config:vec1' 'Config:vec2']
+
+ →FailsIf no1≢myIni[⊂'Config:no1']
+ →FailsIf no1≢⊃myIni[⊂'Config:no1']
+ →FailsIf(''⍴no2)≢⊃myIni[⊂'Config:no2']
+ →FailsIf(''⍴no2)≢⊃myIni[⊂'Config:no2']
+
+ R←∆OK

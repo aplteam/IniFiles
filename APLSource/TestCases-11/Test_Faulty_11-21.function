@@ -1,0 +1,11 @@
+ R←Test_Faulty_11(stopFlag batchFlag);filename;myIni
+⍝ Process an old-style INI file with mixed syntax.
+ R←∆Failed
+
+ filename←'TestCases/sample_007.ini'
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(,⊂filename)
+     →FailsIf 1
+ :Else
+     R←'TestCases/sample_007.ini is inconsistent - neither old-style nor new-style'{⍺≢(⍴⍺)↑⍵}⎕IO⊃⎕DM
+ :EndTrap

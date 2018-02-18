@@ -1,0 +1,11 @@
+ R←Test_Faulty_13(stopFlag batchFlag);filename;myIni
+⍝ Process an INI with an invalid definition
+ R←∆Failed
+
+ filename←'TestCases/sample_201.ini'
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(,⊂filename)
+     →FailsIf 1
+ :Else
+     R←~'Invalid definition, check:'{⍺≡(⍴⍺)↑⍵}⎕IO⊃⎕DM
+ :EndTrap

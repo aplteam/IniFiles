@@ -1,0 +1,10 @@
+ R←Test_0134(stopFlag batchFlag);path;buffer;⎕TRAP
+⍝ Process a VERY large INI file.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+ path←'TestCases/'
+
+ buffer←⎕NEW ##.IniFiles(,⊂path,'Large.ini')
+ →FailsIf 1556 3≢⍴buffer.Get ⍬ ⍬
+
+ R←0

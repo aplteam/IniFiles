@@ -1,0 +1,15 @@
+ R←Test_0127(stopFlag batchFlag);myIni;filename;buffer;⎕TRAP
+⍝ Handle "real" {}" (no replacement!).
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+ filename←'TestCases/INI04'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ buffer←⊃myIni.Get'Config:Path'
+ →PassesIf'C:\Prod\test\log\'≡buffer
+ buffer←⊃myIni.Get'Code:apl1'
+ →PassesIf'{{⍵/⍨2=+⌿0=⍵∘.|⍵}⍳⍵}'≡buffer
+ buffer←⊃myIni.Get'Code:apl2'
+ →PassesIf'C:\Prod\{{⍵/⍨2=+⌿0=⍵∘.|⍵}⍳⍵}'≡buffer
+
+ R←∆OK

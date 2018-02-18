@@ -1,0 +1,15 @@
+ R←Test_0116(stopFlag batchFlag);myIni;filename;keys;io;ml;buffer;⎕TRAP
+⍝ Check whether invalid replacement names are reported properly.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ filename←'TestCases/Sample_015.ini'
+
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(,⊂filename)
+     →FailsIf 1
+ :Else
+     →FailsIf'Invalid value: Home'≢0⊃⎕DM
+ :EndTrap
+
+ R←∆OK

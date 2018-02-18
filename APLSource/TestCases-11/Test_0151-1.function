@@ -1,0 +1,18 @@
+ R←Test_0151(stopFlag batchFlag);⎕TRAP;filename;Ini
+⍝ Exercise the "GetSections" method with three ini files: empty, old-style, new-style
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ filename←'TestCases/Testcase_0151_a.ini'
+ Ini←⎕NEW ##.IniFiles(,⊂filename)
+ →PassesIf(,⊂'CONFIG')≡Ini.GetSections
+
+ filename←'TestCases/Testcase_0151_b.ini'
+ Ini←⎕NEW ##.IniFiles(,⊂filename)
+ →PassesIf('CONFIG' 'OPTIONS')≡Ini.GetSections
+
+ filename←'TestCases/Testcase_0151_c.ini'
+ Ini←⎕NEW ##.IniFiles(,⊂filename)
+ →PassesIf(0⍴⊂'')≡Ini.GetSections
+
+ R←0

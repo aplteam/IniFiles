@@ -1,0 +1,15 @@
+ R←Test_Faulty_07(stopFlag batchFlag);myIni;⎕TRAP;filenames
+⍝ Process two faulty INI files, 4 & 6 (5 is imported by 4).
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ filenames←'TestCases/faulty_sample_4.ini' 'TestCases/faulty_sample_6.ini'
+
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(,⊂filenames)
+     →FailsIf 1
+ :Else
+     →FailsIf('TestCases/faulty_sample_6.ini is inconsistent: AppName=abc'){⍺≢(⍴⍺)↑⍵}⎕IO⊃⎕DM
+ :EndTrap
+
+ R←∆OK

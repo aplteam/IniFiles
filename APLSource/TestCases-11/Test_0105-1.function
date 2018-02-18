@@ -1,0 +1,23 @@
+ R←Test_0105(stopFlag batchFlag);filename;filename2;myIni;myIni2;buffer;ml;⎕TRAP
+⍝ Check handling of remarks when items/sections are deleted.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+ filename←'TestCases/sample_009.ini'
+ filename2←'TestCases/sample_009_new.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ buffer←myIni.Get ⍬ ⍬
+ myIni.Delete'Pathes:'
+ myIni.Delete'General:vat'
+ myIni.Delete'Data:firstname'
+ myIni.Save filename2
+
+ myIni2←⎕NEW ##.IniFiles(,⊂filename2)
+
+ ml←⎕ML ⋄ ⎕ML←1
+ buffer←⊃⍪/1 0 1/(0<⍬∘⍴¨⍴¨buffer[;⎕IO])⊂[⎕IO]buffer ⍝ Remove [Pathes]
+ ⎕ML←ml
+ buffer⌿⍨←~(#.APLTreeUtils.Uppercase buffer[;1+⎕IO])∊#.APLTreeUtils.Uppercase'vat' 'firstname'
+ →FailsIf buffer≢myIni2.Get ⍬ ⍬
+
+ R←∆OK

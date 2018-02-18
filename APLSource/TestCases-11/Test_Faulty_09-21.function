@@ -1,0 +1,16 @@
+ R←Test_Faulty_09(stopFlag batchFlag);filename;myIni
+⍝ Check for invalid settings in the INI file.
+ R←∆Failed
+
+ filename←'TestCases/sample_006.ini'
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(,⊂filename)
+     →FailsIf 1
+ :Else
+     :If 11=⎕EN
+     :AndIf ('TestCases/sample_006.ini is inconsistent - neither old-style nor new-style'){⍺≢(⍴⍺)↑⍵}⎕IO⊃⎕DM
+         →FailsIf 1
+     :End
+ :EndTrap
+
+ R←∆OK

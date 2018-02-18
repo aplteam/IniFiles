@@ -1,0 +1,15 @@
+ R←Test_Faulty_08(stopFlag batchFlag);filename;myIni;⎕TRAP
+⍝ Process faulty_sample_7.ini which is invalid itself but imports first sample_005.ini.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ filename←'TestCases/faulty_sample_7.ini'
+
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(,⊂filename)
+     →FailsIf 1
+ :Else
+     →FailsIf'Invalid syntax: nested values are not supported for "local" variables'{⍺≢(⍴⍺)↑⍵}⎕IO⊃⎕DM
+ :EndTrap
+
+ R←∆OK

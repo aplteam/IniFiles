@@ -1,0 +1,15 @@
+ R←Test_0117(stopFlag batchFlag);myIni;filename;keys;io;ml;buffer;buf;⎕TRAP
+⍝ Take an old-style INI file.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ filename←'TestCases/oldstyle.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ →FailsIf 1≠myIni.OldStyleFlag
+ buf←myIni.Get'General'⍬
+ →FailsIf'INI Files with data type support' 'GBP'≢buf[;1]
+ buf←myIni.Get'DATA'⍬
+ →FailsIf(,¨'a' '2' 'abc' '1 2 3' '')≢buf[;1]
+
+ R←∆OK
