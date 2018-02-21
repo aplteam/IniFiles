@@ -1,6 +1,9 @@
 # IniFiles
 
 
+`IniFiles` is a member of the APLTree library. The library is a collection of classes etc. that aim to support the Dyalog APL programmer. Search GitHub for "apltree" and you will find solutions to many every-day problems Dyalog APL programmers might have to solve.
+
+
 ## Overview
 
 INI files are still useful to provide settings to an application. Neither Vista nor Windows 7 are going to change this.
