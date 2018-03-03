@@ -489,6 +489,6 @@ I found myself once in a situation where I had to keep the same INI file on diff
 
 ## Editing INI files 
 
---(Note that there is a tailored INI-file editor available as part of the APLTree project. See !EditIni for details.)--
+--(Note that there is a tailored INI-file editor available as part of the APLTree project. See EditIni for details.)--
 
-The !EditIni project has been retired.
+The EditIni project has been retired.
