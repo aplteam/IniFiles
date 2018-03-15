@@ -1,5 +1,6 @@
- R←Test_Faulty_13(stopFlag batchFlag);filename;myIni
+ R←Test_Faulty_13(stopFlag batchFlag);filename;myIni;⎕TRAP
 ⍝ Process an INI with an invalid definition
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←∆Failed
 
  filename←'TestCases/sample_201.ini'

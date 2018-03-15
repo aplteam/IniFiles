@@ -16,4 +16,4 @@
  ts←2014 9 18 8 4 0 156
  →FailsIf ts≢ns.(Float2Timestamp Timestamp2Float)ts
 
- R←0
+ R←∆OK

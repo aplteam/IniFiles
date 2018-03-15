@@ -1,5 +1,6 @@
- R←Test_Faulty_09(stopFlag batchFlag);filename;myIni
+ R←Test_Faulty_09(stopFlag batchFlag);filename;myIni;⎕TRAP
 ⍝ Check for invalid settings in the INI file.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←∆Failed
 
  filename←'TestCases/sample_006.ini'

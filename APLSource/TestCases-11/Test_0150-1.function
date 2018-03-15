@@ -11,8 +11,7 @@
  buf,←⊂'; Created by program when needed in order'
  buf,←⊂'; to make TABs survive'
  buf,←⊂'[GENERAL]'
- buf,←⊂'
-     AppName1        =       ',a←'''INI      Files with datatype support'''
+ buf,←⊂'AppName1=',a←'''INI Files with datatype support '''
  buf,←⊂'AppName2',TAB,'=',TAB,'',b←'''More INI      Files with datatype support'''
  #.APLTreeUtils.WriteUtf8File filename buf
 
@@ -21,4 +20,4 @@
  →FailsIf(⍎a)≢⊃buffer.Get'General:AppName1'
  →FailsIf(⍎b)≢⊃buffer.Get'General:AppName2'
 
- R←0
+ R←∆OK

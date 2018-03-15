@@ -1,5 +1,6 @@
- R←Test_Faulty_12(stopFlag batchFlag);filename;myIni
+ R←Test_Faulty_12(stopFlag batchFlag);filename;myIni;⎕TRAP
 ⍝ Process an old-style INI file with mixed syntax.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←∆Failed
 
  filename←'TestCases/sample_200.ini'

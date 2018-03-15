@@ -15,4 +15,4 @@
  Ini←⎕NEW ##.IniFiles(,⊂filename)
  →PassesIf(0⍴⊂'')≡Ini.GetSections
 
- R←0
+ R←∆OK

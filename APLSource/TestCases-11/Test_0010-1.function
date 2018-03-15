@@ -1,7 +1,7 @@
- R←Test_0010(stopFlag batchFlag);filename;myIni;data;data2;∆Match;thisSection;allValues;allValueNames;thisName;where;val1;val2
+ R←Test_0010(stopFlag batchFlag);filename;myIni;data;data2;∆Match;thisSection;allValues;allValueNames;thisName;where;val1;val2;⎕TRAP
 ⍝ Check the "Convert" with and without "flat".
  R←∆Failed
-
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  filename←'TestCases/sample_001.ini'
  myIni←⎕NEW ##.IniFiles(,⊂filename)
  data←myIni.Get ⍬ ⍬

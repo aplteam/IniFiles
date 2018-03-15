@@ -1,6 +1,7 @@
- R←Test_0007(stopFlag batchFlag);buffer;filename;myIni;i;where;filename2;make;myIni2
+ R←Test_0007(stopFlag batchFlag);buffer;filename;myIni;i;where;filename2;make;myIni2;⎕TRAP
 ⍝ Check of replacement syntax. Uses backslahs chars!
  R←∆Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  filename←'TestCases/sample_001.ini'
 
  myIni←⎕NEW ##.IniFiles(,⊂filename)
