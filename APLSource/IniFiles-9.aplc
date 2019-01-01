@@ -23,18 +23,8 @@
       :Access Public Shared
       ⍝ * 3.2.0
       ⍝   * First version after the conversion from the APL wiki to GitHub.
-      ⍝ * 3.1.1
-      ⍝   * Bug fixes:
-      ⍝     * The List method crashed when there are no sections.
-      ⍝     * Typo in documentation fixed.
-      ⍝     * Clarified what happens in case an INI file has no sections at all. 
-      ⍝   * Bug fixes:
-      ⍝     * The `List` method crashed when there are no sections.
-      ⍝     * Typo in documentation fixed.
-      ⍝     * Clarified what happens in case an INI file has no sections at all
-      ⍝ * 3.1.0
-      ⍝   * Method `History` introduced.
-      ⍝   * `IniFiles` is now managed by acre 3.
+      ⍝\\
+      ⍝ For information regarding older versions see <https://github.com/aplteam/IniFiles/releases>
     ∇
 
     ∇ r←GetSections
