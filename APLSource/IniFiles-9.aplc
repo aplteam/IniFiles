@@ -16,13 +16,14 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←(Last⍕⎕THIS)'3.2.1.3' '2019-02-18'
+      r←(Last⍕⎕THIS)'3.2.2.4' '2019-05-01'
     ∇
 
     ∇ History
       :Access Public Shared
-      ⍝ * 3.2.0
-      ⍝   * :Include APLTreeUtils fixed
+      ⍝ * 3.2.2
+      ⍝   * `Put` crashed when called on a non-existing section.
+      ⍝   * `Help` provided out-of-date information regarding ]ADOC
       ⍝\\
       ⍝ For information regarding older versions see <https://github.com/aplteam/IniFiles/releases>
     ∇
@@ -614,12 +615,11 @@
       (SECTION KEY)←Uppercase(section key)
       :If (⊂SECTION)∊_SECTIONS
           where←_SECTIONS⍳⊂SECTION
-      :Else
-          _Sections,←⊂section
-          _SECTIONS,←⊂Uppercase section
-          where←⍴_Sections
-      :EndIf
-      :If 9=⎕NC where⊃_SECTIONS
+ ⍝TODO⍝       :Else
+ ⍝TODO⍝           _Sections,←⊂section
+ ⍝TODO⍝           where←⍴_Sections
+ ⍝TODO⍝       :EndIf
+ ⍝TODO⍝       :elseIf 9=⎕NC where⊃_SECTIONS
           ref←⍎SECTION
       :Else
           ⍎6 Signal⍨'Unkown section; (consider executing "AddSection")'
@@ -789,7 +789,7 @@
           NAME ⎕NS''
           ref←⍎NAME
           ref._Data←0 5⍴''
-          _Sections,←⊂NAME
+          _Sections,←⊂name
           _changed←1
       :EndIf
     ∇
@@ -890,18 +890,17 @@
       ⎕EX'_default'
     ∇
 
-    ∇ r←Help
+    ∇ r←Help;this
       :Access Public shared
+      this←↑¯1↑'.'Split ⍕⎕THIS
       r←''
       r,←⊂'To provide a list of methods and properties use'
-      r,←⊂'  ]ADOC.List ',⍕⎕THIS
+      r,←⊂'  ]ADOC -summary ',⍕this
       r,←⊂'To provide a full list of methods and properties use'
-      r,←⊂'  ''full'' ]ADOC.List ',⍕⎕THIS
+      r,←⊂'  ]ADOC  -summary=full',⍕this
       r,←⊂'To provide more details about methods and properties use'
-      r,←⊂'  ]ADOC.Browse ',⍕⎕THIS
-      r,←⊂'If the User Command ]ADOC is not available on your system:'
-      r,←⊂'http://aplwiki.com/ADOC'
-      r,←⊂'To provide a fully-fledged documentation visit:'
+      r,←⊂'  ]ADOC ',⍕this
+      r,←⊂'A fully-fledged documentation is available at:'
       r,←⊂'http://aplwiki.com/IniFiles'
       r←⊃r
     ∇
