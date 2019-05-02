@@ -398,7 +398,9 @@ Note that....
  1. in case of name clashes the last file wins.
  1. you cannot execute the `Save` method when more than one INI file was specified.
  1. the `IniFilename` property always returns a simple string. In case of more than one INI file the filenames are separated by ";"
- 1. placeholders are replaced only after all INI files specified have been processed. Imagine this general INI file `Foo.INI`:
+ 1. placeholders are replaced only after all INI files specified have been processed. 
+ 
+ Imagine this general INI file `Foo.INI`:
 
 ```
 [CONFIG]
