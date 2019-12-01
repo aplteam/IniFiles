@@ -1,0 +1,32 @@
+ R←Test_0133(stopFlag batchFlag);path;buffer;⎕TRAP
+⍝ Check whether empty assignments are accepted (old-style=1) or not (old-style=0).
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+ path←'TestCases/'
+
+ buffer←⎕NEW ##.IniFiles(,⊂path,'INI05.ini')
+ →T.FailsIf 1≠buffer.OldStyleFlag
+ :Trap 0
+     buffer←⎕NEW ##.IniFiles(,⊂(path,'INI06.ini'))
+     →T.FailsIf 1
+ :Else
+     →T.FailsIf('TestCases/INI06.ini is inconsistent - neither old-style nor new-style'){⍺≢(⍴,⍺)↑⍵}0⊃⎕DM
+ :EndTrap
+
+ buffer←⎕NEW ##.IniFiles((path,'INI07.ini')1)
+ →T.FailsIf 1≠buffer.OldStyleFlag
+
+ :Trap 0
+     buffer←⎕NEW ##.IniFiles(,⊂path,'INI08.ini')
+     →T.FailsIf 1
+ :Else
+     →T.FailsIf('TestCases/INI08.ini is inconsistent: Path='){⍺≢(⍴,⍺)↑⍵}0⊃⎕DM
+ :EndTrap
+
+ buffer←⎕NEW ##.IniFiles(,⊂path,'INI09.ini')
+ →T.FailsIf(buffer.Get'Config:')≢'number1' 'number2' 'number3',⍪1 2 3
+
+ buffer←⎕NEW ##.IniFiles(,⊂path,'INI10.ini')
+ →T.PassesIf∧/'{}'∊⊃buffer.Get'Config:text2'
+
+ R←T._OK

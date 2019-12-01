@@ -1,0 +1,23 @@
+ R←Test_0114(stopFlag batchFlag);myIni;filename;keys;io;ml;⎕IO;⎕ML;⎕TRAP
+⍝ Exercise the "List" method injected by the Convert method.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ filename←'TestCases/Sample_001.ini'
+
+ :For io :In 1 0
+     ⎕IO←io
+     :For ml :In 0 1 2 3
+         ⎕ML←ml
+         myIni←'flat'(⎕NEW ##.IniFiles(,⊂filename)).Convert ⎕NS''
+         keys←'AppName' 'Currency' 'Drive' 'Home' 'LastName' 'LogDir' 'Nested' 'Nested2' 'Path' 'TempDir' 'VAT' 'WorkDir'
+         →T.FailsIf 12 2≢⍴myIni.List
+         →T.FailsIf keys≢myIni.List[;⎕IO]
+
+         myIni←(⎕NEW ##.IniFiles(,⊂filename)).Convert ⎕NS''
+         →T.FailsIf 12 3≢⍴myIni.List ⍬
+         →T.FailsIf 6 2≢⍴myIni.List'Paths'
+     :EndFor
+ :EndFor
+
+ R←T._OK

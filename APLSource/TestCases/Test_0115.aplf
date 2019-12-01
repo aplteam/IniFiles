@@ -1,0 +1,13 @@
+ R←Test_0115(stopFlag batchFlag);myIni;filename;keys;io;ml;buffer;⎕TRAP
+⍝ Deal with an INI file that has empty sections.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ filename←'TestCases/Sample_014.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ buffer←myIni.Get ⍬ ⍬
+ →T.FailsIf 4≠0⊃⍴⎕FMT buffer
+ →T.FailsIf'GENERAL' 'PATHES' 'EMPTY'≢buffer[;0]~⊂''
+
+ R←T._OK

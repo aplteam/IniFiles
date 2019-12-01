@@ -1,0 +1,14 @@
+ R←Test_0112(stopFlag batchFlag);myIni;filename1;filename2;⎕TRAP
+⍝ Specifiy more than one INI file to the constructor, effectively merging INI files.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ filename1←'TestCases/Localities1.ini'
+ filename2←'TestCases/Independent1.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename1 filename2)
+ →T.FailsIf'C:\MyApp'≢⊃myIni.Get'PATHES' 'Home'
+ →T.FailsIf'C:\MyApp\work'≢⊃myIni.Get'PATHES' 'WorkDir'
+ →T.FailsIf'This should survive'≢⊃myIni.Get'DATA' 'NameClash'
+
+ R←T._OK

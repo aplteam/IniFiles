@@ -1,0 +1,15 @@
+ R←Test_0124(stopFlag batchFlag);myIni;buffer;p1;p2;filename;⎕TRAP
+⍝ Check whether "!Import" works with an INI files that has just an !Import statement on it.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+ filename←'TestCases/sample_024'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ buffer←myIni.Get''⍬
+ →T.PassesIf 11=0⊃⍴buffer
+ buffer←myIni.Get'Config'⍬
+ →T.PassesIf 6=0⊃⍴buffer
+ buffer←myIni.Get'Drives'⍬
+ →T.PassesIf 3=0⊃⍴buffer
+
+ R←T._OK

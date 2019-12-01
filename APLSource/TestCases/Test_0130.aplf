@@ -1,0 +1,11 @@
+ R←Test_0130(stopFlag batchFlag);path;buffer;⎕TRAP
+⍝ Check more than one ref in a single value together with "real" curlies.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+ path←'TestCases/'
+
+ buffer←⎕NEW ##.IniFiles((path,'curlies2.ini')1)
+ →T.FailsIf 3 3≢⍴buffer.Get ⍬ ⍬
+ →T.FailsIf 49≠⍴⊃buffer.Get'Alpha' 'AlphaKeys'
+
+ R←T._OK

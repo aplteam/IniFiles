@@ -1,0 +1,22 @@
+ R←Test_0002(stopFlag batchFlag);buffer;filename;myIni;i;where;make;myIni2;⎕TRAP
+⍝ Check 7-bit, 8-bit and Unicode entries.
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ filename←'TestCases/sample_002.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ →T.FailsIf 0≠myIni.OldStyleFlag
+ myIni[⊂'Data:str1']←⊂'George Bush' ⍝ 7-bit only
+ myIni[⊂'Data:str2']←⊂'Kai Jäger' ⍝ 8-bit
+ myIni[⊂'Data:str3']←⊂'Здравствуй мир' ⍝ Unicode
+ myIni[⊂'Data:Здра']←⊂'Unicode key!'
+
+ myIni.Save filename
+
+ myIni2←⎕NEW ##.IniFiles(,⊂filename)
+ →T.FailsIf myIni[⊂'Data:str1']≢myIni2[⊂'Data:str1']
+ →T.FailsIf myIni[⊂'Data:str2']≢myIni2[⊂'Data:str2']
+ →T.FailsIf myIni[⊂'Data:str3']≢myIni2[⊂'Data:str3']
+ →T.FailsIf myIni[⊂'Data:Здра']≢myIni2[⊂'Data:Здра']
+
+ R←T._OK

@@ -1,0 +1,11 @@
+ R←Test_0157(stopFlag batchFlag);⎕TRAP;filename;myIni
+⍝ Instanciate an INI file that has no sections at all, and execute `GetSections` on it
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ filename←'TestCases/HasNoSections.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ →T.PassesIf 0=⊃⍴myIni.Get ⍬ ⍬
+ →T.PassesIf 0∊⍴myIni.GetSections
+
+ R←T._OK

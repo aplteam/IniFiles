@@ -1,0 +1,10 @@
+ R←Test_0155(stopFlag batchFlag);⎕TRAP;filename;myIni
+⍝ Import an INI file that carries "{{}}" on a value - that did not work priuor to version 2.9.1
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ filename←'TestCases/sample_155.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ →T.FailsIf'{This should survive unchanged}'≢⊃myIni.Get'General:Name'
+
+ R←T._OK

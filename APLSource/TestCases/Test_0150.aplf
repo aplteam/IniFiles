@@ -1,0 +1,23 @@
+ R←Test_0150(stopFlag batchFlag);buffer;⎕TRAP;filename;buf;TAB;a;b
+⍝ Process INI file with leading blanks, trailing blanks and blanks in between.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+∆Preperations:
+ TAB←⎕UCS 9
+ filename←'TestCases/CreatedOnTheFlyBy150.ini'
+
+ buf←''
+ buf,←⊂'; Created by program when needed in order'
+ buf,←⊂'; to make TABs survive'
+ buf,←⊂'[GENERAL]'
+ buf,←⊂'AppName1=',a←'''INI Files with datatype support '''
+ buf,←⊂'AppName2',TAB,'=',TAB,'',b←'''More INI      Files with datatype support'''
+ ##.APLTreeUtils.WriteUtf8File filename buf
+
+ buffer←⎕NEW ##.IniFiles(,⊂filename)
+ →T.FailsIf 3 3≢⍴buffer.Get ⍬ ⍬
+ →T.FailsIf(⍎a)≢⊃buffer.Get'General:AppName1'
+ →T.FailsIf(⍎b)≢⊃buffer.Get'General:AppName2'
+
+ R←T._OK

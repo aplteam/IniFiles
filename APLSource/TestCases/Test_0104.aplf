@@ -1,0 +1,28 @@
+ R←Test_0104(stopFlag batchFlag);buffer;filename;myIni;newFilename;orig;new;bool;bool2;line;i;where;shouldBe;buffer2;filename2;myIni2;⎕TRAP
+⍝ Check handling of "local" vars and replacement syntax.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+ filename←'TestCases/sample_004.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ buffer←myIni.Get'SECTION1'⍬
+ shouldBe←''
+ shouldBe,←⊂'path1' 'C:\MyApp\Whereabouts\myPath1'
+ shouldBe,←⊂'path2' 'C:\MyApp\Whereabouts\myPath2'
+ shouldBe,←⊂'path3' 'C:\MyApp\Whereabouts\myPath2'
+ →T.FailsIf buffer≢{⎕ML←1 ⋄ ↑⍵}shouldBe
+ buffer←myIni.Get'SECTION2'⍬
+ shouldBe←''
+ shouldBe,←⊂'path1' 'C:\MyApp\Whereabouts\myPath1'
+ shouldBe,←⊂'path100' 'C:\MyApp\Whereabouts\myPath100'
+ →T.FailsIf buffer≢{⎕ML←1 ⋄ ↑⍵}shouldBe
+
+ buffer←myIni.Get'SECTION3'⍬
+ →T.FailsIf buffer≢↑('name3' 'Barak Obama')('AllNames' 'George Bush and Bill Clinton and Barak Obama')
+
+ filename2←'TestCases/sample_004_new.ini'
+ myIni.Save filename2
+ myIni2←⎕NEW ##.IniFiles(,⊂filename2)
+ →T.FailsIf≢/(myIni myIni2).Get⊂⍬ ⍬
+
+ R←T._OK
