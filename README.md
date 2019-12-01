@@ -29,7 +29,7 @@ However, there is some common ground:
 
 * In old fashioned INI files values don't have to be enclosed in quotes. The Windows API functions however except quotes; if found they are simply removed.
 
-* It is widely agreed that neither section names nor value names should carry a blank, although the Windows API functions accept them. The `IniFiles` class would throw an error if it finds one in any name.
+* It is widely agreed that neither section names nor value names should carry a space, although the Windows API functions accept them. The `IniFiles` class would throw an error if it finds one in any name.
 
 
 ## Differences between APL-like INI files and classic ones
@@ -44,7 +44,7 @@ However, there is some common ground:
 
 * Section names must be valid APL names.
 
-* Value names must be valid APL names. That implies that they may not carry a blank.
+* Value names must be valid APL names. That implies that they may not carry a space.
 
 
 ## A warning
@@ -77,7 +77,7 @@ An entry like:
       FormSize=300 400
 ```
 
-results in a two-element-vector "!FormSize" holding two integers.
+results in a two-element-vector `FormSize` holding two integers.
 
 
 ### References (place holders)
@@ -189,7 +189,7 @@ digits=1 2 3
 
 are both converted into text. 
 
-Note that an INI file must be consistent: it cannot mix classic stuff with new stuff. This INI file:
+Note that an INI file must be consistent: it cannot mix classic syntax with APL syntax. This INI file:
 
 ```
 text1=hello
@@ -385,13 +385,22 @@ You can ask `Convert` to convert the instance into a flat namespace, effectively
 
 ### Multiple INI files (Merging)
 
-Note that since version 2.0.0 one can specify more than one filename in the `⎕NEW` statement. This effectively merges the INI files together. Note that....
+Since version 2.0.0 one can specify more than one filename in the `⎕NEW` statement. This effectively merges the INI files together. 
+
+For that to work you must specify two or more INI files in the first item of the argument passed on to the constructor, hence:
+
+```
+⎕NEW IniFile (,⊂'main.ini' 'sub.ini')
+```
+
+Note that....
 
  1. in case of name clashes the last file wins.
  1. you cannot execute the `Save` method when more than one INI file was specified.
- 1. the `IniFilename` property always returns a simple string. In case of more than one INI file the filenames are separated by ";".
-
-Note that placeholders are replaced only after all INI files specified have been processed. Imagine this general INI file `Foo.INI`:
+ 1. the `IniFilename` property always returns a simple string. In case of more than one INI file the filenames are separated by ";"
+ 1. placeholders are replaced only after all INI files specified have been processed. 
+ 
+ Imagine this general INI file `Foo.INI`:
 
 ```
 [CONFIG]
