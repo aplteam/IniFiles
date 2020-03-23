@@ -1,0 +1,16 @@
+ R←Test_0160(stopFlag batchFlag);⎕TRAP;filename;myIni;flat
+⍝ Instanciate an INI file that is empty and then call the `List` method on it.
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ filename←'TestCases/HasNoContentss.ini'
+ ##.APLTreeUtils.WriteUtf8File filename(⊂'vars = 1')
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ flat←myIni.Convert ⎕NS''
+ →T.GoToTidyUp 0≠≢flat.List''
+
+ R←T._OK
+
+∆TidyUp:
+ ##.FilesAndDirs.DeleteFile filename
+ ⍝Done
