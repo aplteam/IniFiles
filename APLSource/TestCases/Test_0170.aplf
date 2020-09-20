@@ -1,0 +1,9 @@
+ R←Test_0170(stopFlag batchFlag);⎕TRAP
+⍝ Exercise the `Help` function
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+
+ →T.PassesIf 0<≢##.IniFiles.Help
+
+ R←T._OK
+ ⍝Done

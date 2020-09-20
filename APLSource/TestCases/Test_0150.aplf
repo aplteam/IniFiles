@@ -13,7 +13,7 @@
  buf,←⊂'[GENERAL]'
  buf,←⊂'AppName1=',a←'''INI Files with datatype support '''
  buf,←⊂'AppName2',TAB,'=',TAB,'',b←'''More INI      Files with datatype support'''
- ##.APLTreeUtils.WriteUtf8File filename buf
+ (⊂buf)##.FilesAndDirs.NPUT filename 1
 
  buffer←⎕NEW ##.IniFiles(,⊂filename)
  →T.FailsIf 3 3≢⍴buffer.Get ⍬ ⍬

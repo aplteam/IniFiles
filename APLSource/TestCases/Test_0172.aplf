@@ -1,0 +1,40 @@
+ R←Test_0172(stopFlag batchFlag);⎕TRAP;filename;myIni;filename2
+⍝ Refer to the `Changed` Property
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+
+⍝ We copy a test INI file, instantiate it, add a value and then check `Changed`
+ filename←'TestCases/sample_009.ini'
+ filename2←##.FilesAndDirs.GetTempFilename2⊃⎕SI
+ filename ##.FilesAndDirs.CopyTo filename2
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename2)
+ →T.GoToTidyUp 0≠myIni.Changed
+ 1 myIni.Put'DATA:New'
+ →T.GoToTidyUp 1≠myIni.Changed
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename2)
+ →T.GoToTidyUp 0≠myIni.Changed
+ myIni[⊂'DATA:New']←2
+ →T.GoToTidyUp 1≠myIni.Changed
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename2)
+ →T.GoToTidyUp 0≠myIni.Changed
+ myIni.AddSection'FOO'
+ →T.GoToTidyUp 1≠myIni.Changed
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename2)
+ →T.GoToTidyUp 0≠myIni.Changed
+ myIni.Delete'Data:Nested'
+ →T.GoToTidyUp 1≠myIni.Changed
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename2)
+ →T.GoToTidyUp 0≠myIni.Changed
+ myIni.Delete'Data:'
+ →T.GoToTidyUp 1≠myIni.Changed
+
+ R←T._OK
+
+∆TidyUp:
+ ##.FilesAndDirs.RmDir filename2
+ ⍝Done

@@ -8,8 +8,8 @@
  myIni←⎕NEW ##.IniFiles(,⊂filename)
  →T.FailsIf 1≠myIni.OldStyleFlag
  buf←myIni.Get'General'⍬
- →T.FailsIf'INI Files with data type support' 'GBP'≢buf[;1]
+ →T.FailsIf'INI Files with data type support' 'GBP'≢buf[;2]
  buf←myIni.Get'DATA'⍬
- →T.FailsIf(,¨'a' '2' 'abc' '1 2 3' '')≢buf[;1]
+ →T.FailsIf(,¨'a' '2' 'abc' '1 2 3' '')≢buf[;2]
 
  R←T._OK

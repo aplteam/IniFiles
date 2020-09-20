@@ -1,12 +1,14 @@
- R←Test_0128(stopFlag batchFlag);buffer;path;filename1;list1;list2;filename2;myIni1;myIni2;⎕TRAP
+ R←Test_0128(stopFlag batchFlag);buffer;path;filename1;list1;list2;filename2;myIni1;myIni2;⎕TRAP;qdmx
 ⍝ Exercise the "GetIniFiles" method.
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
  path←'TestCases/'
 
- ⍝ Pre-conditions
- ##.APLTreeUtils.WriteUtf8File(filename1←path,'foo.ini')('[CONFIG]' 'name1=''abc''')
- ##.APLTreeUtils.WriteUtf8File(filename2←path,'foo_',(2 ⎕NQ'#' 'GetEnvironment' 'Computername'),'.ini')('[CONFIG]' 'name2=''xyz''')
+⍝ Pre-conditions
+ filename1←path,'foo.ini'
+ (⊂'[CONFIG]' 'name1=''abc''')##.FilesAndDirs.NPUT filename1
+ filename2←path,'foo_',(2 ⎕NQ'#' 'GetEnvironment' 'Computername'),'.ini'
+ (⊂'[CONFIG]' 'name2=''xyz''')##.FilesAndDirs.NPUT filename2
 
  list1←##.IniFiles.GetIniFiles path,'foo'
  list2←##.IniFiles.GetIniFiles path,'foo.ini'
@@ -27,7 +29,8 @@
      {}##.IniFiles.GetIniFiles path,'foo'
      →T.FailsIf
  :Else
-     →T.FailsIf('Could not find ','TestCases/foo.ini')≢0⊃⎕DM
+     qdmx←⎕DMX
+     →T.FailsIf('Could not find ','TestCases/foo.ini')≢qdmx.EM
  :EndTrap
 
  R←T._OK

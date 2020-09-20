@@ -6,13 +6,13 @@
  myIni←⎕NEW ##.IniFiles(,⊂filename)
  data←myIni.Get ⍬ ⍬
  data2←myIni.Convert ⎕NS''
- →T.FailsIf~0∊⍴data2.⎕NL-2
+ →T.FailsIf 0≠≢data2.⎕NL-2
  ∆Match←{(⍺∊⍵)∧(⍵∊⍺)}
- →T.FailsIf~∧/(data2.⎕NL-9)∆Match(data[;0]~⊂'')
+ →T.FailsIf~∧/(data2.⎕NL-9)∆Match(data[;1]~⊂'')
 
  :For thisSection :In data2.⎕NL-9
      allValueNames←data2.{⍵.⎕NL-2}data2.⍎thisSection
-     →T.FailsIf~∧/allValueNames ∆Match(myIni.Get thisSection ⍬)[;0]
+     →T.FailsIf~∧/allValueNames ∆Match(myIni.Get thisSection ⍬)[;1]
      :For thisName :In allValueNames
          val1←⊃myIni.Get thisSection thisName
          where←(data2.{⍵.⎕NL-2}data2.⍎thisSection)⍳⊂thisName
@@ -21,12 +21,12 @@
      :EndFor
  :EndFor
 
- data←(0<⊃∘⍴¨data[;1])⌿data
+ data←(0=≢¨data[;1])⌿data
  data2←'flat'myIni.Convert ⎕NS''
- →T.FailsIf 0∊∧/(data2.⎕NL-2)∊data[;1]
- →T.FailsIf 0∊∧/(data[;1])∊(data2.⎕NL-2)
- →T.FailsIf 0∊∧/(data2.(⍎¨⎕NL-2))∊data[;2]
- →T.FailsIf 0∊∧/(data[;2])∊data2.(⍎¨⎕NL-2)
+ →T.FailsIf 0∊∧/(data2.⎕NL-2)∊data[;2]
+ →T.FailsIf 0∊∧/(data[;2])∊(data2.⎕NL-2)
+ →T.FailsIf 0∊∧/(data2.(⍎¨⎕NL-2))∊data[;3]
+ →T.FailsIf 0∊∧/(data[;3])∊data2.(⍎¨⎕NL-2)
  →T.FailsIf 12 2≢⍴data2.List
 
  R←T._OK

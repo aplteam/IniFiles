@@ -8,7 +8,7 @@
 
  myIni←(⎕NEW ##.IniFiles(filename3 1)).Convert ⎕NS''
  myIni←⎕NEW ##.IniFiles(,⊂filename3)
- →T.PassesIf 14=0⊃⍴myIni.Get ⍬ ⍬
+ →T.PassesIf 14=1⊃⍴myIni.Get ⍬ ⍬
  →T.PassesIf 0≡⊃myIni[⊂'Config:debug']
  →T.PassesIf 1≡⊃myIni[⊂'config:catcherrors']
  →T.PassesIf'Jaeger''s app'≡⊃myIni[⊂'config:appname']

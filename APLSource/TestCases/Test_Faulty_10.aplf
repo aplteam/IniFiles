@@ -1,4 +1,4 @@
- R←Test_Faulty_10(stopFlag batchFlag);myIni;filename;keys;io;ml;buffer;buf;⎕TRAP
+ R←Test_Faulty_10(stopFlag batchFlag);myIni;filename;keys;io;ml;buffer;buf;⎕TRAP;qdmx
 ⍝ Process an inconsistent (old-style/new-style) INI file.
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
@@ -9,7 +9,8 @@
      myIni←⎕NEW ##.IniFiles(,⊂filename)
      →T.FailsIf 1
  :Else
-     →T.FailsIf('TestCases/AlmostOldstyle.ini is inconsistent - neither old-style nor new-style'){⍺≢(⍴⍺)↑⍵}0⊃⎕DM
+     qdmx←⎕DMX
+     →T.FailsIf('TestCases/AlmostOldstyle.ini is inconsistent - neither old-style nor new-style'){⍺≢(⍴⍺)↑⍵}qdmx.EM
  :EndTrap
 
  R←T._OK

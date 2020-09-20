@@ -6,6 +6,6 @@
 
  myIni←⎕NEW ##.IniFiles(,⊂filename)
  ⎕DL 0.2
- →T.FailsIf 4502 'Port: 4502'≢{⍵[;1]}myIni.Get'General'⍬
+ →T.FailsIf 4502 'Port: 4502'≢{⍵[;2]}myIni.Get'General'⍬
 
  R←T._OK

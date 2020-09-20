@@ -10,12 +10,12 @@
  shouldBe,←⊂'path1' 'C:\MyApp\Whereabouts\myPath1'
  shouldBe,←⊂'path2' 'C:\MyApp\Whereabouts\myPath2'
  shouldBe,←⊂'path3' 'C:\MyApp\Whereabouts\myPath2'
- →T.FailsIf buffer≢{⎕ML←1 ⋄ ↑⍵}shouldBe
+ →T.FailsIf buffer≢↑shouldBe
  buffer←myIni.Get'SECTION2'⍬
  shouldBe←''
  shouldBe,←⊂'path1' 'C:\MyApp\Whereabouts\myPath1'
  shouldBe,←⊂'path100' 'C:\MyApp\Whereabouts\myPath100'
- →T.FailsIf buffer≢{⎕ML←1 ⋄ ↑⍵}shouldBe
+ →T.FailsIf buffer≢↑shouldBe
 
  buffer←myIni.Get'SECTION3'⍬
  →T.FailsIf buffer≢↑('name3' 'Barak Obama')('AllNames' 'George Bush and Bill Clinton and Barak Obama')

@@ -7,7 +7,7 @@
 
  myIni←⎕NEW ##.IniFiles(,⊂filename)
  buffer←myIni.Get ⍬ ⍬
- →T.FailsIf 4≠0⊃⍴⎕FMT buffer
- →T.FailsIf'GENERAL' 'PATHES' 'EMPTY'≢buffer[;0]~⊂''
+ →T.FailsIf 4≠1⊃⍴⎕FMT buffer
+ →T.FailsIf'GENERAL' 'PATHES' 'EMPTY'≢buffer[;1]~⊂''
 
  R←T._OK

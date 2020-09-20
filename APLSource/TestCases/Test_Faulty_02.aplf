@@ -1,4 +1,4 @@
- R←Test_Faulty_02(stopFlag batchFlag);filename;myIni;⎕TRAP
+ R←Test_Faulty_02(stopFlag batchFlag);filename;myIni;⎕TRAP;qdmx
 ⍝ Process faulty_sample_2.ini which is invalid: Missing "=".
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
@@ -9,7 +9,8 @@
      myIni←⎕NEW ##.IniFiles(,⊂filename)
      →T.FailsIf 1
  :Else
-     →T.FailsIf('Check line 10 of ','TestCases/faulty_sample_2.ini'){⍺≢(⍴⍺)↑⍵}0⊃⎕DM
+     qdmx←⎕DMX
+     →T.FailsIf('Check line 10 of ','TestCases/faulty_sample_2.ini'){⍺≢(⍴⍺)↑⍵}qdmx.EM
  :EndTrap
 
  R←T._OK

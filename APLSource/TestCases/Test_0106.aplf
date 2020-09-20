@@ -15,9 +15,9 @@
  myIni[⊂'Data:NEsted']←⊂newVector
  myIni.Save filename2
 
- buffer2←{⎕IO←1 ⋄ (⊂{⍵↓⍨¯1+⍵⍳';'}⎕IO⊃⍵),1↓⍵}##.APLTreeUtils.ReadUtf8File filename2
+ buffer2←{⎕IO←1 ⋄ (⊂{⍵↓⍨¯1+⍵⍳';'}⎕IO⊃⍵),1↓⍵}⊃⎕NGET filename2 1
  buffer2←2↓¨{⎕IO←1 ⋄ ⍵↓⍨¯1+⍵⍳';'}¨buffer2
  comments←'Test cases for the "IniFile" class' '[data]' '- nested [0]' 'nested [1]' 'nested [2]' 'nested [7]' 'nested [8]' 'nested [999]'
- →T.FailsIf comments≢(0<⍬∘⍴¨⍴¨buffer2~¨' ')/buffer2
+ →T.FailsIf comments≢(0<≢¨buffer2~¨' ')/buffer2
 
  R←T._OK

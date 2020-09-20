@@ -2,7 +2,6 @@
 ⍝ Check handling of comments in INI files together with changes and a call of the "Save" method.
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
- ⎕ML←3 ⋄ ⎕IO←1
  filename←'TestCases/sample_003.ini'
 
  myIni←⎕NEW ##.IniFiles(,⊂filename)
@@ -10,27 +9,27 @@
  myIni[⊂'section2:hello']←⊂'my world'
  newFilename←(¯4↓myIni.IniFilename),'_new.ini'
  myIni.Save newFilename
- orig←##.APLTreeUtils.ReadUtf8File filename
- new←##.APLTreeUtils.ReadUtf8File newFilename
+ orig←⊃⎕NGET filename 1
+ new←⊃⎕NGET newFilename 1
  orig←orig[(⍳⍴orig)~(¯1+1⍳⍨∨/¨'[section3]'∘⍷¨orig)+⍳3]
  bool←{{⍵∨≠\⍵}⍵∊'[]'}¨orig
  :For i :In ⍳⍴bool
      :If 1∊bool2←i⊃bool
          line←i⊃orig
-         (bool2/line)←##.APLTreeUtils.Uppercase bool2/line
+         (bool2/line)←##.APLTreeUtils2.Uppercase bool2/line
          (i⊃orig)←line
      :EndIf
  :EndFor
- orig←(0<⍬∘⍴¨⍴¨orig)/orig
+ orig←(0<≢¨orig)/orig
  orig~¨←⊂' ',⎕UCS 9
  new~¨←⊂' ',⎕UCS 9
 ⍝ One got changed, so:
  →T.FailsIf 1≠+/~orig∊new
  →T.FailsIf 1≠⍴((~new∊orig)/new)~⊂''
- where←##.APLTreeUtils.Where~new∊orig
+ where←⍸~new∊orig
 ⍝ Check the changed one
  →T.FailsIf(,⊂'hello=''myworld''')≢new[where]~⊂''
- where←##.APLTreeUtils.Where~orig∊new
+ where←⍸~orig∊new
  →T.FailsIf'hello=''world'''≢where⊃orig
 
  R←T._OK

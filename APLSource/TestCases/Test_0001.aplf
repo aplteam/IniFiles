@@ -39,7 +39,7 @@
  buffer,←⊂'[Config]'
  buffer,←⊂'no1=2'               ⍝ Overwrite
  buffer,←⊂'vec2=4 5 6'          ⍝ Add
- ##.APLTreeUtils.WriteUtf8File filename buffer
+ (⊂buffer)##.FilesAndDirs.NPUT filename 1
 
  myIni2←⎕NEW ##.IniFiles(,⊂filename)
  →T.FailsIf 2≠⍴(⊂'')~⍨{⍵[;⎕IO]}myIni2.Get ⍬ ⍬                 ⍝ Two Sections?
@@ -121,7 +121,7 @@
  :EndTrap
  →T.FailsIf 0=myIni2.AddSection'Path2'                        ⍝ Shoudn''t exist but does.
  →T.FailsIf 1=myIni2.AddSection'Path2'                        ⍝ Shoudn exist but doesn''t.
- →T.FailsIf(##.APLTreeUtils.Uppercase'Config' 'PATH' '999' 'Path2')≢{⍵/⍨0<⍬∘⍴¨⍴¨⍵}{⍵[;⎕IO]}myIni2.Get ⍬ ⍬  ⍝ Something is wrong with the sections!
+ →T.FailsIf(##.APLTreeUtils2.Uppercase'Config' 'PATH' '999' 'Path2')≢{⍵/⍨0<⍬∘⍴¨⍴¨⍵}{⍵[;⎕IO]}myIni2.Get ⍬ ⍬  ⍝ Something is wrong with the sections!
  myIni2[⊂'Path2:my']←⊂'Kai Jaeger'
  →T.FailsIf 1 2≢⍴myIni2.Get'Path2'⍬                           ⍝ Something is wrong with new section "path2"
  →T.FailsIf 0≠myIni2.AddSection'Path2'                        ⍝ Does already exist and therefore should fail' ⍝ Add again
@@ -222,13 +222,13 @@
 
  ⍝ Test for an existing ini file which does not contain anything at all
  filename←'TestCases\Empty.ini'
- ##.APLTreeUtils.WriteUtf8File filename''
+ (⊂'')##.FilesAndDirs.NPUT filename 1
  myIni1←⎕NEW ##.IniFiles(,⊂filename)
  myIni1.AddSection'Config'
  myIni1[⊂'Config:msg']←⊂'That''s fine!'
  myIni1.Save filename
  myIni2←⎕NEW ##.IniFiles(,⊂filename)
  →T.FailsIf(myIni1.Get ⍬ ⍬)≢(myIni2.Get ⍬ ⍬)                  ⍝ Should ∆Match, really!
- ##.APLTreeUtils.WriteUtf8File filename''
+ (⊂'')##.FilesAndDirs.NPUT filename 1
 
  R←T._OK

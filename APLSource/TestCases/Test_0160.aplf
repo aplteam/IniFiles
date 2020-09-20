@@ -3,7 +3,7 @@
  R←T._Failed
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  filename←'TestCases/HasNoContentss.ini'
- ##.APLTreeUtils.WriteUtf8File filename(⊂'vars = 1')
+ (⊂⊂'vars = 1')##.FilesAndDirs.NPUT filename 1
 
  myIni←⎕NEW ##.IniFiles(,⊂filename)
  flat←myIni.Convert ⎕NS''

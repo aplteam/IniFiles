@@ -6,10 +6,10 @@
 
  myIni←⎕NEW ##.IniFiles(,⊂filename)
  buffer←myIni.Get''⍬
- →T.PassesIf 11=0⊃⍴buffer
+ →T.PassesIf 11=1⊃⍴buffer
  buffer←myIni.Get'Config'⍬
- →T.PassesIf 6=0⊃⍴buffer
+ →T.PassesIf 6=1⊃⍴buffer
  buffer←myIni.Get'Drives'⍬
- →T.PassesIf 3=0⊃⍴buffer
+ →T.PassesIf 3=1⊃⍴buffer
 
  R←T._OK
