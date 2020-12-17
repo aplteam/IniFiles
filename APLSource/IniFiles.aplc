@@ -15,13 +15,15 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'IniFiles' '5.0.0.8' '2020-09-20'
+      r←'IniFiles' '5.0.1.14' '2020-12-17'
     ∇
 
     ∇ History
       :Access Public Shared
+      ⍝ * 5.0.1
+      ⍝   * Internal change: `Uppercase` and Lowercase` replaced by calles to `⎕C`.
       ⍝ * 5.0.0
-      ⍝   * BREAKING CHANGES: 
+      ⍝   * BREAKING CHANGES:
       ⍝     * Does not now requires the class `APLTreeUtils2`
       ⍝     * Requires at least Dyalog 18.0
       ⍝   * `IniFiles` does not :Include APLTreeUtils anymore
@@ -34,7 +36,7 @@
     ∇ r←GetSections
     ⍝ Returns a vector of strings with sections names.
       :Access Public Instance
-      r←A.Uppercase 1↓¨_Sections
+      r←1 ⎕C 1↓¨_Sections
     ∇
 
     ∇ r←GetIniFiles filename;p;fn;ext;fn2;fn1;f1;f2;assume;A
@@ -68,7 +70,7 @@
       lnos←bool/lnos                            ⍝ Remove the "!Import" lines from the line numbers
       allRemarks←(~bool)/allRemarks             ⍝ Remove the "!Import" lines from "allRemarks"
       il←(+/∧\' '=↑il)↓¨il                      ⍝ Drop any leading blanks
-      il←A.Lowercase¨(il⍳¨' ')↓¨il ⍝ Drop method name, leaving the filenames
+      il←⎕C¨(il⍳¨' ')↓¨il                       ⍝ Drop method name, leaving the filenames
       refToIniFile←⊃1⊃⎕CLASS ⎕THIS              ⍝ Ref to itself
       r←0 3⍴⊂''
       :For this :In il
@@ -78,7 +80,7 @@
               fullName←this                     ⍝ Is already absolute
           :EndIf
           fullName←⊃,/1 ⎕NPARTS fullName
-          'Tries to import itself'⎕SIGNAL 11/⍨(⊂A.Lowercase fullName)∊A.Lowercase _IniFilename
+          'Tries to import itself'⎕SIGNAL 11/⍨(⊂⎕C fullName)∊⎕C _IniFilename
           temp←(⎕NEW refToIniFile(fullName _debugFlag)).Convert ⎕NS''  ⍝ Create an instance
           buff←temp.List''
           buff[;3]←DoubleCurlies¨buff[;3]
@@ -146,17 +148,17 @@
               buffer←i⊃,keys
               'Use "Section:key" syntax'⎕SIGNAL 11/⍨2≠⍴buffer
               (section key)←buffer
-              SECTION←A.Uppercase section←'_',section
+              SECTION←1 ⎕C section←'_',section
               :If (⍴_Sections)<where←_SECTIONS⍳⊂SECTION
-                       ⍝ Event the section is new!
-                  (A.Uppercase section)⎕NS''
+                  ⍝ Event the section is new!
+                  (1 ⎕C section)⎕NS''
                   _Sections,←⊂section
-                  {⍵._Data←0 5⍴'' ⋄ ⍵.generalRemarks←''}⍎A.Uppercase section
+                  {⍵._Data←0 5⍴'' ⋄ ⍵.generalRemarks←''}⍎1 ⎕C section
                   _changed←1
                   where←⍴_Sections
               :EndIf
               data←{⍵._Data}ref←⍎where⊃_SECTIONS
-              KEY←A.Uppercase key
+              KEY←1 ⎕C key
               (toc TOC)←↓⍉data[;1 5]
               :If (1⊃⍴data)≥where2←TOC⍳⊂KEY
               ⍝ It is an update!
@@ -211,7 +213,7 @@
                   :Else
                       :If 2=+/'{}'∊buffer
                           name←{{⍵↑⍨¯1+'}'⍳⍨⍵}⍵↓⍨⍵⍳'{'}buffer
-                          :If (1⊃⍴ref._Data)<line←ref._Data[;5]⍳⊂A.Uppercase name
+                          :If (1⊃⍴ref._Data)<line←ref._Data[;5]⍳⊂1 ⎕C name
                               6 ⎕SIGNAL⍨'Unknown: "',name,'"'
                           :EndIf
                           buffer2←(line⊃ref._Data[;2]){a←¯1+⍵⍳'{' ⋄ w←a⌽⍵ ⋄ (-a)⌽⍺,⍵↓⍨⍵⍳'}'}buffer
@@ -238,8 +240,8 @@
               r←''
           :Else
               'Invalid key'⎕SIGNAL 11/⍨0=⍴∊keys
-              KEYS←A.Uppercase¨keys
-              :If 0∊bool←('_',¨1⊃¨KEYS)∊A.Uppercase _Sections
+              KEYS←1 ⎕C¨keys
+              :If 0∊bool←('_',¨1⊃¨KEYS)∊1 ⎕C _Sections
                   11 ⎕SIGNAL⍨'Unknown section: ',↑{⍺,',',⍵}/∪(~bool)/1⊃¨keys
               :EndIf
               r←''
@@ -250,7 +252,7 @@
                       r,←⊂{({⍵⌿⍨0<≢¨⍵[;1]}⍵._Data)[;2]}⍎'_',1⊃THIS
                   :Else
                       noOf←{1⊃⍴⍵._Data}⍎'_',1⊃THIS
-                      :If noOf<where←(2⊃THIS){(⍵._Data[;5])⍳⊂A.Uppercase ⍺}⍎'_',1⊃THIS
+                      :If noOf<where←(2⊃THIS){(⍵._Data[;5])⍳⊂1 ⎕C ⍺}⍎'_',1⊃THIS
                           :If 0=⎕NC'_default'
                               6 ⎕SIGNAL⍨'Unknown: ',2⊃this
                           :Else
@@ -350,7 +352,7 @@
                   ⍎11 Signal⍨'Invalid section name(s): ',⊃{⍺,', ',⍵}/invalid/⊃¨data
               :EndIf
           :AndIf 0≠≢_Sections←'_',¨∪~∘'[ ]'∘⊃¨data
-              ⎕NS∘''¨sec←A.Uppercase _Sections
+              ⎕NS∘''¨sec←1 ⎕C _Sections
               (⍎¨sec)._Data←⊂0 5⍴''
               ProcessSections data allRemarks
           :EndIf
@@ -361,7 +363,7 @@
     ∇ ProcessSections(data allRemarks);thisSection;sectionRemarks;this;ref;buffer;TOC;toc
       :For thisSection sectionRemarks :In ↓⍉↑data allRemarks
           this←'_','[ ]'~⍨1⊃thisSection
-          ref←⍎A.Uppercase this
+          ref←⍎1 ⎕C this
           ref.generalRemarks←⊂{⍵↓⍨+/∧\' '=⍵}1⊃sectionRemarks
           buffer←{i←⍵⍳'=' ⋄ ((i-1)↑⍵)(i↓⍵)}¨1↓thisSection
           :If OldStyleFlag
@@ -372,7 +374,7 @@
               ⍎11 Signal⍨'Invalid value name(s): ',⊃{⍺,', ',⍵}/{⍵/⍨' '∊¨⍵}⊃¨buffer
           :EndIf
           toc←' '~¨⍨1⊃¨buffer
-          TOC←A.Uppercase toc
+          TOC←1 ⎕C toc
           buffer←2⊃¨{2↑⍵,'' ''}¨buffer
           EstablishValuesInSection(TOC toc buffer)
           :If 0=≢ref._Data
@@ -508,7 +510,7 @@
       :If ⍬≡section
           section←''
       :EndIf
-      SECTION←A.Uppercase section
+      SECTION←1 ⎕C section
       :If ((⊂section)∊''⍬)∧(⊂key)∊''⍬
           r←0 3⍴''
           :For thisSection :In _SECTIONS
@@ -536,7 +538,7 @@
               r←ref._Data
           :Else
               key←{0 1∊⍨≡⍵:⊂⍵ ⋄ ⍵}key
-              subRow←ref._Data[;5]⍳A.Uppercase key
+              subRow←ref._Data[;5]⍳1 ⎕C key
               :If ∨/bool←(⊃⍴ref._Data)<subRow
                   :If 0=⎕NC'default'
                       :If 0=⎕NC'Default'
@@ -617,7 +619,7 @@
           (section key)←name
       :EndIf
       section←'_',section
-      (SECTION KEY)←A.Uppercase(section key)
+      (SECTION KEY)←1 ⎕C(section key)
       :If (⊂SECTION)∊_SECTIONS
           where←_SECTIONS⍳⊂SECTION
           ref←⍎SECTION
@@ -641,7 +643,7 @@
           :EndIf
           ref._Data[where;2 3]←buffer
       :Else
-          ref._Data⍪←(⊂key),buffer,(⊂''),⊂A.Uppercase key
+          ref._Data⍪←(⊂key),buffer,(⊂''),⊂1 ⎕C key
           _changed←1
       :EndIf
     ∇
@@ -677,7 +679,7 @@
       r←0
       :If 0 1∊⍨≡name
           ⍎'Invalid right argument'Signal 11/⍨1≠':'+.=name
-          (section key)←' '~¨⍨2↑A.Uppercase':'(≠⊆⊢)name
+          (section key)←' '~¨⍨2↑1 ⎕C':'(≠⊆⊢)name
           section←'_',section
           :If 0=≢key
               :If 9=⎕NC section
@@ -687,7 +689,7 @@
               :EndIf
           :Else
               ⍝key←{⍵∧.=' ':'' ⋄ ⍵}key
-              (section key)←A.Uppercase':'(≠⊆⊢)name
+              (section key)←1 ⎕C':'(≠⊆⊢)name
               section←'_',section
               :If (⊂section)∊_SECTIONS
                   TOC←{⍵._Data[;5]}ref←⍎section
@@ -750,7 +752,7 @@
     ⍝ Exist ('section:key1' 'otherSection:key2' 'thirdSection:')
     ⍝ ~~~
       :If 0 1∊⍨≡name
-          (section key)←' '~¨⍨A.Uppercase 2↑':'(≠⊆⊢)name
+          (section key)←' '~¨⍨1 ⎕C 2↑':'(≠⊆⊢)name
           section←'_',section
           :If 0∊⍴key
               r←⊃9=⎕NC section
@@ -784,7 +786,7 @@
  ⍝
  ⍝ Return a 1 if a section was added. A 0 is rerturned in case the section already exists.
       :Access Public
-      NAME←A.Uppercase name←'_',name
+      NAME←1 ⎕C name←'_',name
       ⍎'Section name must be a valid APL name'Signal 11/⍨¯1=⎕NC NAME
       :If r←0=⎕NC NAME
           NAME ⎕NS''
@@ -839,7 +841,7 @@
       :EndIf
       :For thisSection :In _Sections
           thisSection←1↓thisSection
-          THISSECTION←A.Uppercase thisSection
+          THISSECTION←1 ⎕C thisSection
           ref←⍎'_',THISSECTION
           :If 0=⎕NC'ref.generalRemarks'  ⍝ might not exist if the original filename was empty
               data,←⊂'[',THISSECTION,']'
@@ -919,7 +921,7 @@
     ∇
 
     ∇ r←_SECTIONS
-      r←A.Uppercase _Sections
+      r←1 ⎕C _Sections
     ∇
 
     ∇ value←ReplaceCurlies(toc value);bool;val2;where;name;names;noOf
@@ -928,14 +930,14 @@
       value←ExchangeDoubleCourlies value'}'(⎕UCS 1)
       :If ∧/'{}'∊value
           bool←{{⍵∨≠\⍵}⍵∊'{}'}value
-          names←A.Uppercase bool/value
+          names←1 ⎕C bool/value
           names←'}'~⍨¨'{'A.Split names
           names←(0<≢¨names)/names
           :For name :In names
               :Trap 0
                   where←toc⍳⊂name
                   :If (⍴toc)∨.<where
-                      where←(A.Uppercase locals[;1])⍳⊂name
+                      where←(1 ⎕C locals[;1])⍳⊂name
                       ⍎('Invalid references found in INI file, check "',name,'"')Signal 6/⍨where∨.>1⊃⍴locals
                       val2←DoubleQuotes⊃locals[where;2]
                   :Else
@@ -978,7 +980,7 @@
                       locals⍪←'' '' ''remark''
                   :Else
                       :If ∧/'{}'∊value
-                          value2←⍎ReplaceCurlies((A.Uppercase toc)value)
+                          value2←⍎ReplaceCurlies((1 ⎕C toc)value)
                       :Else
                           :If _oldStyleFlag
                               value2←value
@@ -987,7 +989,7 @@
                               value2←⍎value
                           :EndIf
                       :EndIf
-                      itemNo←locals[;5]⍳⊂NAME←A.Uppercase name~','
+                      itemNo←locals[;5]⍳⊂NAME←1 ⎕C name~','
                       :If itemNo>1⊃⍴locals
                           locals⍪←name value2 value remark NAME
                       :ElseIf ','∊name
@@ -1020,7 +1022,7 @@
       bool←';'≠⊃¨data                   ⍝ Pure comment lines
       (data lnos)←bool∘/¨data lnos      ⍝ Get rid of all comment lines from data & lnos
       :If ∨/b←'!'=⊃¨data
-      :AndIf ∨/b←b\'!IMPORT'∘{⍺≡A.Uppercase(⍴⍺)↑⍵}¨b/data
+      :AndIf ∨/b←b\'!IMPORT'∘{⍺≡1 ⎕C(⍴⍺)↑⍵}¨b/data
           oldStyleFlag←0                ⍝ Now we know it's not an old-style file.
           (data lnos)←(⊂~b)/¨data lnos
       :EndIf

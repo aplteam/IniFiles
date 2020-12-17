@@ -6,7 +6,7 @@
 ⍝ We copy a test INI file, instantiate it, add a value and then check `Changed`
  filename←'TestCases/sample_009.ini'
  filename2←##.FilesAndDirs.GetTempFilename2⊃⎕SI
- filename ##.FilesAndDirs.CopyTo filename2
+ filename2 ⎕NCOPY⍠('IfExists' 'Replace')⊣filename
 
  myIni←⎕NEW ##.IniFiles(,⊂filename2)
  →T.GoToTidyUp 0≠myIni.Changed
