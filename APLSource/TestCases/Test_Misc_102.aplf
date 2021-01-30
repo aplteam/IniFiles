@@ -1,0 +1,20 @@
+ R←Test_Misc_102(stopFlag batchFlag);buffer;filename;myIni;this1;this2;this3;⎕TRAP
+⍝ Test simple strings and vectors of strings.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+ filename←'TestCases/sample_002.ini'
+
+ this1←'one,two,three'
+ this2←'two,three'
+ this3←'three'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ →T.FailsIf this1≢⊃myIni[⊂'section1:this']
+ →T.FailsIf this2≢⊃myIni[⊂'section2:this']
+ →T.FailsIf this3≢⊃myIni[⊂'section3:this']
+
+ →T.FailsIf this1≢⊃myIni.Get'section1:this'
+ →T.FailsIf this2≢⊃myIni.Get'section2:this'
+ →T.FailsIf this3≢⊃myIni.Get'section3:this'
+
+ R←T._OK

@@ -1,0 +1,12 @@
+ R←Test_Misc_122(stopFlag batchFlag);myIni;filename;keys;io;ml;buffer;buf;NS;tab;⎕TRAP
+⍝ Process an INI file were TAB and blanks are used for formatting.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ filename←'TestCases/sample_with_blanks.ini'
+ tab←⎕UCS 9
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ →T.FailsIf 10 3≢⍴myIni.Get ⍬ ⍬
+
+ R←T._OK

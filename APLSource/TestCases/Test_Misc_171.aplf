@@ -1,0 +1,12 @@
+ R←Test_Misc_171(stopFlag batchFlag);⎕TRAP;filename;myIni
+⍝ Exercise the `EstablishedAt` function
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+
+ filename←'TestCases/sample_009.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ →T.PassesIf 0<myIni.EstablishedAt
+
+ R←T._OK
+ ⍝Done

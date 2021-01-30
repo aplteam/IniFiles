@@ -1,0 +1,14 @@
+ R←Test_Misc_123(stopFlag batchFlag);myIni;buffer;p1;p2;filename;⎕TRAP
+⍝ Check whether the "Save" method works on an ini file with !Import (it shouldn't).
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+ filename←'TestCases/sample_012.ini'
+
+ myIni←⎕NEW ##.IniFiles(,⊂filename)
+ :Trap 0
+     myIni.Save'c:/tttt'
+ :Else
+     ⍎('An INI file with !Import statement cannot be saved'≢⎕IO⊃⎕DM)/'. ⍝ Something is wrong'
+ :EndTrap
+
+ R←T._OK

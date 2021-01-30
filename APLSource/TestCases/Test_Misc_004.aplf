@@ -1,0 +1,39 @@
+ R←Test_Misc_004(stopFlag batchFlag);buffer;filename;myIni;⎕TRAP
+⍝ Check handling of the right argument of the constructor.
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ filename←'TestCases/sample_002.ini'
+
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles filename
+     →T.FailsIf 1 ⍝ Something is wrong: this should be a LENGTH ERROR
+ :Else
+     →T.FailsIf'LENGTH ERROR'≢⎕IO⊃⎕DM         ⍝ Something is wrong here'
+ :EndTrap
+
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(⊂filename)
+     →T.FailsIf 1  ⍝ Something is wrong: this should be a LENGTH ERROR
+ :Else
+     →T.FailsIf'LENGTH ERROR'≢⎕IO⊃⎕DM         ⍝ Something is wrong here'
+ :EndTrap
+
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles('')
+     →T.FailsIf 1  ⍝ Something is wrong: this should be a LENGTH ERROR
+ :Else
+     →T.FailsIf'LENGTH ERROR'≢⎕IO⊃⎕DM         ⍝ Something is wrong here'
+ :EndTrap
+
+ :Trap 0
+     myIni←⎕NEW ##.IniFiles(⊂'')
+     →T.FailsIf 1  ⍝ Something is wrong: this should be a LENGTH ERROR
+ :Else
+     →T.FailsIf'LENGTH ERROR'≢⎕IO⊃⎕DM         ⍝ Something is wrong here'
+ :EndTrap
+
+ {}⎕NEW ##.IniFiles(,⊂filename)              ⍝ should work
+
+ {}⎕NEW ##.IniFiles(,⊂'')                    ⍝ should work
+
+ R←T._OK

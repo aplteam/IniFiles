@@ -1,0 +1,14 @@
+ R←Test_Misc_156(stopFlag batchFlag);⎕TRAP;filename;myIni
+⍝ Import foo into foo - is endless loop detected? (Not prior to 2.9.1)
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ filename←'TestCases/sample_156.ini'
+
+ :Trap 11
+     myIni←⎕NEW ##.IniFiles(,⊂filename)
+     →T.FailsIf 1
+ :Else
+     →T.FailsIf'Tries to import itself'{⍺≢(⍴⍺)↑⍵}⎕IO⊃⎕DM
+ :EndTrap
+
+ R←T._OK

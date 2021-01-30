@@ -1,0 +1,30 @@
+ R←Test_Misc_107(stopFlag batchFlag);filename1;filename2;filename3;myIni;buffer;p1;p2;⎕TRAP
+⍝ Check whether "!Import" works properly.
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+ filename1←'TestCases/sample_010.ini'
+ filename2←'TestCases/sample_011.ini'
+ filename3←'TestCases/sample_012.ini'
+
+ myIni←(⎕NEW ##.IniFiles(filename3 1)).Convert ⎕NS''
+ myIni←⎕NEW ##.IniFiles(,⊂filename3)
+ →T.PassesIf 14=1⊃⍴myIni.Get ⍬ ⍬
+ →T.PassesIf 0≡⊃myIni[⊂'Config:debug']
+ →T.PassesIf 1≡⊃myIni[⊂'config:catcherrors']
+ →T.PassesIf'Jaeger''s app'≡⊃myIni[⊂'config:appname']
+ →T.PassesIf'T:\this\that\'≡⊃myIni[⊂'Paths:PathToArchive']
+ →T.PassesIf'M:\there\world\'≡⊃myIni[⊂'Paths:PathToDocuments']
+ →T.PassesIf'T:\'≡⊃myIni[⊂'Paths:ArchiveDrive']
+ →T.PassesIf'R:\'≡⊃myIni[⊂'Paths:TestDrive']
+ →T.PassesIf'M:\'≡⊃myIni[⊂'Paths:DOCUMENTSDRIVE']
+ →T.PassesIf 12398≡⊃myIni[⊂'More:Counter']
+ →T.PassesIf((1 2 3)(4 5))≡⊃myIni[⊂'More:numbers']
+ →T.PassesIf('129.10.123.255' '129.10.123.254')≡⊃myIni[⊂'More:blacklist']
+
+ :Trap 0
+     myIni.Save'c:/tttt'
+ :Else
+     ⍎('An INI file with !Import statement cannot be saved'≢⎕IO⊃⎕DM)/'. ⍝ Something is wrong'
+ :EndTrap
+
+ R←T._OK
