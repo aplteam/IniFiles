@@ -3,6 +3,6 @@
  T.Run 1
  htmlFilename←CodeCoverage.ProcessDataAndCreateReport T.codeCoverage.filename
  :If 1 ∆YesOrNo'View CodeCoverage report?'
-     APLTreeUtils2.GoToWebPage'file://',htmlFilename
+     ##.APLTreeUtils2.GoToWebPage'file://',htmlFilename
  :EndIf
 ⍝Done
