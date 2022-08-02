@@ -7,19 +7,22 @@
 ⍝ MyInstance2←⎕NEW IniFiles ('MyIniFile1.ini' 'MyIniFile2.ini')
 ⍝ AsNamespace←MyInstance2.Convert ⎕NS ''
 ⍝ ~~~
-⍝ Author: Kai Jaeger ⋄ APL Team Ltd ⋄ http://aplteam.com
+⍝ Author: Kai Jaeger
 ⍝
-⍝ Homepage: http://aplwiki.com/IniFiles
+⍝ Homepage: https://github.com/aplteam/IniFiles
 
     ⎕IO←1 ⋄ ⎕ML←1
 
     ∇ r←Version
       :Access Public Shared
-      r←'IniFiles' '5.0.3+22' '2022-04-13'
+      r←'IniFiles' '5.1.0+23' '2022-??-??'
     ∇
 
     ∇ History
       :Access Public Shared
+      ⍝ * 5.1.0
+      ⍝   * Author information updated
+      ⍝   * ...
       ⍝ * 5.0.3
       ⍝   * `GetIniFiles` did not work under Linux/Mac-OS
       ⍝   * Now managed by Cider
