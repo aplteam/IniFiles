@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Coverage</title>
+<meta charset="utf-8"/>
+<style>
+@media screen{
+    html {background-color: #FFFFF0;}
+body {
+    font-size: 16px;
+    font-family : Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
+    margin: 1em;
+}
+th, td {padding: 5px 10px;}
+th {text-align: left;}
+h1, h2, h3, h4, h5, h6 {color: #424242;}
+h1 {font-size: 22px;}
+h2 {font-size: 18px; margin-top: 2em; margin-bottom:0.3em;}
+tbody tr:nth-child(even) {background-color: #F0F0F0;}
+tbody tr:nth-child(odd) {background-color: #FAFAFA;}
+th {background-color: #E6E6E6;color: #424242;}
+table {border: silver 1px solid; font-size: 14px;font-family: APLFont, monospace;}
+code , code a {font-size: 14px; font-family: APLFont, monospace;}
+code.header {
+    font-size: 16px; 
+    font-family: APLFont, monospace; 
+    margin: 1.5em 0.5em 0 0.5em; 
+    padding:0;
+    display: block;
+}
+div.code-block {
+    border: 1px silver dashed;
+    background-color: #F2F2F2;
+    display: block;
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    padding: 0.5em;
+}
+div.code-block.missing {
+    background-color: #fa605254;
+}
+div.code-block code {display: block; white-space: pre-wrap; margin:0; padding:0; word-wrap: break-word;}
+.emphasize { font-weight: 800;}
+ul li, ol li {margin: 0.7em 0.2em;}
+.float-right {float:right;}
+.no-underline {    text-decoration :none;}
+.top-links {font-size:20px; padding-left: 0.6em;}
+.align-right {text-align: right;}
+#footer hr {margin-top:1.5em;}
+#footer p {margin-top:5px; padding-top:0; font-size: 9px;}
+@font-face {
+        font-family: "APLFont";
+    src:
+        local("APL385 Unicode"),
+        url("https://misc.aplteam.com/apl385.ttf") format("truetype");
+}
+.info {border: 1px silver dashed; background-color: #F2F2F2;margin: 0.5em; padding: 0.5em;}
+}
+@media print{@page {size: portrait}
+@page {
+    margin: 1cm 1cm 1cm 1.75cm;
+    @bottom-right {
+        content: counter(page) " / " counter(pages);
+  }
+}
+body {
+    font: 12pt "Times New Roman", Times, serif;
+    line-height: 1.2;
+     /* CSS3 filter, at the moment Webkit only. Prefix it for future implementations */
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%); /* future-proof */
+}
+h1 {font-size: 18pt;}
+h2 {font-size: 16pt; margin-top: 10pt; margin-bottom: 3pt;}
+th, td {padding: 2pt 3pt;}
+th {text-align: left;background-color: #DBDBDB;}
+tbody tr:nth-child(odd) {background-color: #EDEDED;}
+table {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-size: 8pt;
+    font-family: APLFont, monospace;
+}
+div.keep-together {break-inside: avoid; break-before:auto;}
+table {border: silver 1pt solid;}
+code , code a {font-size: 8pt; font-family: APLFont, monospace;}
+code.header {
+    font-size: 8pt;
+    font-family: APLFont, monospace;
+    margin: 7pt 3pt 0 10pt;
+    padding:0;
+    display: block;
+}
+div.code-block {
+    border: 1pt silver dashed;
+    background-color: #F2F2F2;
+    display: block;
+    margin: 4pt 4pt 4pt 4pt;
+    padding: 4pt;
+}
+div.code-block code {display: block; white-space: pre-wrap; margin:0; padding:0; word-wrap: break-word;}
+.emphasize { font-weight: 800;}
+a {text-decoration: none;color: black;}
+ul li, ol li {margin: 8pt 3pt;}
+.no-print {display:none;}
+.align-right {text-align: right;}
+#footer hr {margin-top:1.5em;}
+#footer p {margin-top:5pt; padding-top:0; font-size: 6pt;}
+@font-face {
+        font-family: "APLFont";
+    src:
+        local("APL385 Unicode"),
+        url("https://misc.aplteam.com/apl385.ttf") format("truetype");
+}
+.info {border: 1px silver dashed; background-color: #F2F2F2;margin: 8px; padding: 8px;}
+}
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.2/b-2.0.0/b-print-2.0.0/fh-3.1.9/r-2.2.9/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.2/b-2.0.0/b-print-2.0.0/fh-3.1.9/r-2.2.9/datatables.min.js"></script>
+</head>
+<body>
+<h1 id="top">Coverage Report</h1>
+<p>Watched: 49 fns/opr within <code>#.IniFiles.IniFiles</code></p>
+<p>The test suite was executed once:</p>
+<table>
+<thead>
+<tr><th>Executed at</th><th>APLVersion</th><th>Memory (MB)</th></tr>
+</thead>
+<tbody>
+<tr><td>2023-06-15 18:39:25</td><td>Windows-64 ⋄ 18.2.46943.0 ⋄ W ⋄ Development ⋄ Unicode</td><td>53</td></tr>
+</tbody>
+</table>
+<p>Overall 95% of the testable code is covered.</p>
+<p>(Comment lines, empty lines, all <code>:End</code>* lines etc. are ignored)</p>
+<p>39 of the fns/opr are 100% covered.</p>
+<div id="partly-covered" class="keep-together">
+<table id="percent">
+<thead>
+<tr><th style="text-align:left;">Function/Operator</th><th style="text-align:left;">Lines not executed</th><th style="text-align:left;">Coverage</th><th style="text-align:right;">≢</th></tr>
+</thead>
+<tbody>
+<tr class="uncovered"><td><a href="#listing_1" title="Link to listing">#.IniFiles.IniFiles.Version</a></td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td><a href="#listing_2" title="Link to listing">#.IniFiles.IniFiles.GetComputerName</a></td><td>4</td><td>67</td><td>3</td></tr>
+<tr><td><a href="#listing_3" title="Link to listing">#.IniFiles.IniFiles.GetLocals</a></td><td>4←≢21,24-25,36</td><td>87</td><td>31</td></tr>
+<tr><td><a href="#listing_4" title="Link to listing">#.IniFiles.IniFiles.Get_</a></td><td>5←≢23,27,37,44,49</td><td>88</td><td>43</td></tr>
+<tr><td><a href="#listing_5" title="Link to listing">#.IniFiles.IniFiles.EstablishValuesInSection</a></td><td>4←≢10,21-22,24</td><td>89</td><td>35</td></tr>
+<tr><td><a href="#listing_6" title="Link to listing">#.IniFiles.IniFiles.Delete</a></td><td>63, 64, 65</td><td>89</td><td>28</td></tr>
+<tr><td><a href="#listing_7" title="Link to listing">#.IniFiles.IniFiles.CheckValues</a></td><td>48, 52, 58</td><td>93</td><td>41</td></tr>
+<tr><td><a href="#listing_8" title="Link to listing">#.IniFiles.IniFiles.ProcessSections</a></td><td>8</td><td>94</td><td>17</td></tr>
+<tr><td><a href="#listing_9" title="Link to listing">#.IniFiles.IniFiles.Exist</a></td><td>39</td><td>94</td><td>17</td></tr>
+<tr><td><a href="#listing_10" title="Link to listing">#.IniFiles.IniFiles.Import</a></td><td>17</td><td>96</td><td>23</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_11" title="Link to listing">#.IniFiles.IniFiles.set_IniFilename</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_12" title="Link to listing">#.IniFiles.IniFiles.get_IniFilename</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_13" title="Link to listing">#.IniFiles.IniFiles.set_Default</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_14" title="Link to listing">#.IniFiles.IniFiles.get_Default</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_15" title="Link to listing">#.IniFiles.IniFiles.set_OldStyleFlag</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_16" title="Link to listing">#.IniFiles.IniFiles.get_OldStyleFlag</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_17" title="Link to listing">#.IniFiles.IniFiles.set_EstablishedAt</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_18" title="Link to listing">#.IniFiles.IniFiles.get_EstablishedAt</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_19" title="Link to listing">#.IniFiles.IniFiles.set_Changed</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_20" title="Link to listing">#.IniFiles.IniFiles.get_Changed</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_21" title="Link to listing">#.IniFiles.IniFiles.set_keyed default data</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_22" title="Link to listing">#.IniFiles.IniFiles.get_keyed default data</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_23" title="Link to listing">#.IniFiles.IniFiles.History</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_24" title="Link to listing">#.IniFiles.IniFiles.GetSections</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_25" title="Link to listing">#.IniFiles.IniFiles.GetIniFiles</a></td><td></td><td>100</td><td>7</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_26" title="Link to listing">#.IniFiles.IniFiles.make0</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_27" title="Link to listing">#.IniFiles.IniFiles.make1</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_28" title="Link to listing">#.IniFiles.IniFiles.make2</a></td><td></td><td>100</td><td>4</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_29" title="Link to listing">#.IniFiles.IniFiles.Init</a></td><td></td><td>100</td><td>6</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_30" title="Link to listing">#.IniFiles.IniFiles.Create</a></td><td></td><td>100</td><td>27</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_31" title="Link to listing">#.IniFiles.IniFiles.Convert</a></td><td></td><td>100</td><td>38</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_32" title="Link to listing">#.IniFiles.IniFiles.Get</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_33" title="Link to listing">#.IniFiles.IniFiles.Put</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_34" title="Link to listing">#.IniFiles.IniFiles.Put_</a></td><td></td><td>100</td><td>23</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_35" title="Link to listing">#.IniFiles.IniFiles.AddSection</a></td><td></td><td>100</td><td>8</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_36" title="Link to listing">#.IniFiles.IniFiles.HasInifileChanged</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_37" title="Link to listing">#.IniFiles.IniFiles.Save</a></td><td></td><td>100</td><td>51</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_38" title="Link to listing">#.IniFiles.IniFiles.DeleteDefault</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_39" title="Link to listing">#.IniFiles.IniFiles.Help</a></td><td></td><td>100</td><td>11</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_40" title="Link to listing">#.IniFiles.IniFiles.CheckExtension</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_41" title="Link to listing">#.IniFiles.IniFiles._SECTIONS</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_42" title="Link to listing">#.IniFiles.IniFiles.ReplaceCurlies</a></td><td></td><td>100</td><td>20</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_43" title="Link to listing">#.IniFiles.IniFiles.MergeImport</a></td><td></td><td>100</td><td>15</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_44" title="Link to listing">#.IniFiles.IniFiles.ExchangeDoubleCourlies</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_45" title="Link to listing">#.IniFiles.IniFiles.EvaluateINIs</a></td><td></td><td>100</td><td>20</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_46" title="Link to listing">#.IniFiles.IniFiles.CallCreate</a></td><td></td><td>100</td><td>6</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_47" title="Link to listing">#.IniFiles.IniFiles.Timestamp2Float</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_48" title="Link to listing">#.IniFiles.IniFiles.type</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_49" title="Link to listing">#.IniFiles.IniFiles.extension</a></td><td></td><td>100</td><td>0</td></tr>
+</tbody>
+</table>
+</div>
+<script>
+$(document).ready(function() {
+    var oTable;
+    oTable = $("#percent").DataTable( {
+        paging:   false,
+        ordering: true,
+        info:     true,
+        fixedHeader: true,
+        order: [2,"asc"],
+        dom: "Bft",
+        drawCallback: function( settings ) {
+             var api = this.api();
+             $('.header[id^="listing_"]').next().addBack().css("display","none");
+             api.rows( {page:"current"} ).data().each(function(data){
+              id = data[0];
+              id = id.match(/"(\#.*?)"/);
+              if (id){$(id[1]).next().addBack().css("display","block");}
+             })
+        },      
+        buttons: [
+        {
+            text: "Partly covered (9)",
+            titleAttr: "50%",
+            className: "active",
+            action: function ( e, dt, node, config ) {
+                var text = this.text();
+                var search = "^(?!(0%|100%)).*";
+                oTable.column(2)
+                    .search(search,true,false,false)
+                    .draw();
+                $(".dt-buttons button").removeClass("active");
+                this.active( true );
+            }
+        },
+        {
+            text: "Uncovered (1)",
+            titleAttr: "0%",
+            className: "active",
+            action: function ( e, dt, node, config ) {
+                var text = this.text();
+                var search = "^0%";
+                oTable.column(2)
+                    .search(search,true,false,false)
+                    .draw();
+                $(".dt-buttons button").removeClass("active");
+                this.active( true );
+            }
+        },
+        {
+            text: "Fully covered (39)",
+            titleAttr: "100%",
+            className: "active",
+            action: function ( e, dt, node, config ) {
+                var text = this.text();
+                var search = "100%";
+                oTable.column(2)
+                    .search(search,true,false,false)
+                    .draw();
+                $(".dt-buttons button").removeClass("active");
+                this.active( true );
+            }
+        },
+        {
+            text: "All (49)",
+            titleAttr: "all",
+            className: "active",
+            action: function ( e, dt, node, config ) {
+                var text = this.text();
+                var search = ".";
+                oTable.column(2)
+                    .search(search,true,false,false)
+                    .draw();
+                $(".dt-buttons button").removeClass("active");
+                this.active( true );
+            }
+        },
+    ],
+ 
+        columnDefs: [
+            {className: "align-right", targets: [2,3]
+            },
+            {
+                render: function ( data, type, row, meta ) {
+                            return data+"%" ;        
+                        },
+                targets: 2
+            }
+        ]             
+    } );
+    oTable.button(0).trigger();
+
+} );    
+</script>
+<h2>Listings</h2>
+<code class="header" id="listing_1">#.IniFiles.IniFiles.Version &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Version</code>
+<code> [1]  :Access Public Shared</code>
+<code class="emphasize">→[2]  r←'IniFiles' '5.1.0-beta-1+23' '2022-08-04'</code>
+</div>
+<code class="header" id="listing_2">#.IniFiles.IniFiles.GetComputerName &mdash; 67%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←GetComputerName</code>
+<code> [1]  :If 'Win'≡A.GetOperatingSystem ⍬</code>
+<code> [2]      r←2 ⎕NQ'#' 'GetEnvironment' 'Computername'</code>
+<code> [3]  :Else</code>
+<code class="emphasize">→[4]      r←⊃⎕SH'uname -n'</code>
+<code> [5]  :EndIf</code>
+</div>
+<code class="header" id="listing_3">#.IniFiles.IniFiles.GetLocals &mdash; 87%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (data locals allRemarks)←GetLocals(data allRemarks)</code>
+<code> [1]      ⍝ Extract any "local" variabels.</code>
+<code> [2]      ⍝ Locals are defined as those assigned above the first section</code>
+<code> [3]   locals←0 5⍴''                                     ⍝ Initialize the main result</code>
+<code> [4]   :If '['∊⊃¨data</code>
+<code> [5]       :If 0&lt;where←¯1+'['⍳⍨⊃¨data                    ⍝ Where starts the first section</code>
+<code> [6]           data2←where↑data                          ⍝ Take eveything above the first section</code>
+<code> [7]           data2←(+/∧\' '=↑data2)↓¨data2             ⍝ Drop any leading blanks</code>
+<code> [8]           data2/⍨←'!Import'{((⍴⍺)↑[2]↑⍵)∨.≠⍺}data2  ⍝ Remove all "!Import" directives</code>
+<code> [9]           data2←'='A.Split¨data2     ⍝ Split remaining items at "=" (assignment)</code>
+<code> [10]          toc←' '~¨⍨1⊃¨data2                        ⍝ First part = names</code>
+<code> [11]          data2←2⊃¨{2↑⍵,'' ''}¨data2                ⍝ Second part = data</code>
+<code> [12]          allRemarks2←where↑allRemarks              ⍝</code>
+<code> [13]          :For i :In ⍳⍴,toc</code>
+<code> [14]              name←i⊃toc</code>
+<code> [15]              value←i⊃data2</code>
+<code> [16]              remark←i⊃allRemarks2</code>
+<code> [17]              :If 0∊⍴name</code>
+<code> [18]                  locals⍪←'' '' ''remark''</code>
+<code> [19]              :Else</code>
+<code> [20]                  :If ∧/'{}'∊value</code>
+<code class="emphasize">→[21]                      value2←⍎ReplaceCurlies((1 ⎕C toc)value)</code>
+<code> [22]                  :Else</code>
+<code> [23]                      :If _oldStyleFlag</code>
+<code class="emphasize">→[24]                          value2←value</code>
+<code class="emphasize">→[25]                          value←'''',value,''''</code>
+<code> [26]                      :Else</code>
+<code> [27]                          value2←⍎value</code>
+<code> [28]                      :EndIf</code>
+<code> [29]                  :EndIf</code>
+<code> [30]                  itemNo←locals[;5]⍳⊂NAME←1 ⎕C name~','</code>
+<code> [31]                  :If itemNo&gt;1⊃⍴locals</code>
+<code> [32]                      locals⍪←name value2 value remark NAME</code>
+<code> [33]                  :ElseIf ','∊name</code>
+<code> [34]                      ⍎911 Signal⍨'Invalid syntax: nested values are not supported for "local" variables'</code>
+<code> [35]                  :Else</code>
+<code class="emphasize">→[36]                      locals[itemNo;2 3 4]←value2 value remark</code>
+<code> [37]                  :EndIf</code>
+<code> [38]              :EndIf</code>
+<code> [39]          :EndFor</code>
+<code> [40]          locals[;4]←{2=|≡⍵:↑,/⍵ ⋄ ⍵}¨locals[;4]</code>
+<code> [41]          data←where↓data</code>
+<code> [42]          allRemarks←where↓allRemarks</code>
+<code> [43]      :EndIf</code>
+<code> [44]  :EndIf</code>
+</div>
+<code class="header" id="listing_4">#.IniFiles.IniFiles.Get_ &mdash; 88%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←{default}Get_ name</code>
+<code> [1]   :Access Public</code>
+<code> [2]   :If 0 1∊⍨≡name</code>
+<code> [3]       (section key)←{∨/b←':'=⍵:⍵{((¯1+⍵)↑⍺)(⍵↓⍺)}b⍳1 ⋄ ⍵}name</code>
+<code> [4]   :Else</code>
+<code> [5]       (section key)←name</code>
+<code> [6]   :EndIf</code>
+<code> [7]   ⍎'Invalid syntax!'Signal 11/⍨∧/2=¨≡¨section key</code>
+<code> [8]   section←{0∊⍴⍵:⍵ ⋄ '_',⍵}section</code>
+<code> [9]   :If ⍬≡section</code>
+<code> [10]      section←''</code>
+<code> [11]  :EndIf</code>
+<code> [12]  SECTION←1 ⎕C section</code>
+<code> [13]  :If ((⊂section)∊''⍬)∧(⊂key)∊''⍬</code>
+<code> [14]      r←0 3⍴''</code>
+<code> [15]      :For thisSection :In _SECTIONS</code>
+<code> [16]          r⍪←(⊂1↓thisSection),'' ''</code>
+<code> [17]          r⍪←(⊂''),thisSection⍎'_Data[;1 2]'</code>
+<code> [18]      :EndFor</code>
+<code> [19]  :ElseIf (⊂key)∊''⍬</code>
+<code> [20]      :If (1⊃⍴_Sections)≥where←_SECTIONS⍳⊂SECTION</code>
+<code> [21]          r←(where⊃_SECTIONS)⍎'_Data[;1 2]'</code>
+<code> [22]      :Else</code>
+<code class="emphasize">→[23]          ⍎6 Signal⍨'Unknown: "',(⍕∊section),'"'</code>
+<code> [24]      :EndIf</code>
+<code> [25]  :Else</code>
+<code> [26]      :If 0=≢section</code>
+<code class="emphasize">→[27]          r←⊃⍪/{⍵{(⊂⍺),⍵._Data}⍎⍵}¨_Sections</code>
+<code> [28]      :Else</code>
+<code> [29]          row←_SECTIONS⍳⊂SECTION</code>
+<code> [30]          :If (1⊃⍴_Sections)&lt;row</code>
+<code> [31]              ⍎6 Signal⍨'Unknown section'</code>
+<code> [32]          :EndIf</code>
+<code> [33]      :EndIf</code>
+<code> [34]      this←row⊃_Sections</code>
+<code> [35]      ref←⍎row⊃_SECTIONS</code>
+<code> [36]      :If 0=≢key</code>
+<code class="emphasize">→[37]          r←ref._Data</code>
+<code> [38]      :Else</code>
+<code> [39]          key←{0 1∊⍨≡⍵:⊂⍵ ⋄ ⍵}key</code>
+<code> [40]          subRow←ref._Data[;5]⍳1 ⎕C key</code>
+<code> [41]          :If ∨/bool←(⊃⍴ref._Data)&lt;subRow</code>
+<code> [42]              :If 0=⎕NC'default'</code>
+<code> [43]                  :If 0=⎕NC'Default'</code>
+<code class="emphasize">→[44]                      ⍎6 Signal⍨'Value Error: "',(↑{⍺,',',⍵}/bool/key),'"'</code>
+<code> [45]                  :Else</code>
+<code> [46]                      :Trap 6</code>
+<code> [47]                          r←(ref._Data[;2],⊂Default)[subRow]</code>
+<code> [48]                      :Else</code>
+<code class="emphasize">→[49]                          ⍎(1⊃⎕DM)Signal ⎕EN</code>
+<code> [50]                      :EndTrap</code>
+<code> [51]                  :EndIf</code>
+<code> [52]              :Else</code>
+<code> [53]                  r←(ref._Data[;2],⊂default)[subRow]</code>
+<code> [54]              :EndIf</code>
+<code> [55]          :Else</code>
+<code> [56]              r←ref._Data[subRow;2]</code>
+<code> [57]          :EndIf</code>
+<code> [58]      :EndIf</code>
+<code> [59]  :EndIf</code>
+<code> [60]  :If 2=⍴⍴r</code>
+<code> [61]      :Select 2⊃⍴r</code>
+<code> [62]      :Case 2</code>
+<code> [63]          r⌿⍨←0&lt;≢¨r[;1]</code>
+<code> [64]      :Case 3</code>
+<code> [65]          r⌿⍨←0∨.≠⍨≢¨r</code>
+<code> [66]      :EndSelect</code>
+<code> [67]  :EndIf</code>
+</div>
+<code class="header" id="listing_5">#.IniFiles.IniFiles.EstablishValuesInSection &mdash; 89%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  EstablishValuesInSection(TOC toc buffer)</code>
+<code> [1]   :For i :In ⍳⍴,toc</code>
+<code> [2]       (NAME name)←i⊃¨TOC toc</code>
+<code> [3]       value←i⊃buffer</code>
+<code> [4]       remark←{⍵↓⍨+/∧\' '=⍵}(1+i)⊃sectionRemarks ⍝ first one is the section</code>
+<code> [5]       :If 0∊⍴name</code>
+<code> [6]           ref._Data⍪←'' '' ''remark''</code>
+<code> [7]       :Else</code>
+<code> [8]           :If 0∊⍴value</code>
+<code> [9]           :AndIf 0=_oldStyleFlag</code>
+<code class="emphasize">→[10]              ⍎911 Signal⍨'Invalid line: ',i⊃toc</code>
+<code> [11]          :ElseIf ∧/'{}'∊value</code>
+<code> [12]          :AndIf ~OldStyleFlag</code>
+<code> [13]              :Trap 0</code>
+<code> [14]                  value2←⍎ReplaceCurlies(ref._Data[;5],TOC~¨',')value</code>
+<code> [15]              :Else</code>
+<code> [16]                  ⍎911 Signal⍨'Invalid value: ',name</code>
+<code> [17]              :EndTrap</code>
+<code> [18]          :Else</code>
+<code> [19]              :If _oldStyleFlag</code>
+<code> [20]                  :If ''''∧.=2↑¯1⌽value2←value</code>
+<code class="emphasize">→[21]                      :Trap 2 11</code>
+<code class="emphasize">→[22]                          value2←⍎value2</code>
+<code> [23]                      :Else</code>
+<code class="emphasize">→[24]                          ⎕EN ⎕SIGNAL⍨'Invalid definition, check: ',value2</code>
+<code> [25]                      :EndTrap</code>
+<code> [26]                  :EndIf</code>
+<code> [27]              :Else</code>
+<code> [28]                  :Trap 2 11</code>
+<code> [29]                      value2←⍎value</code>
+<code> [30]                  :Else</code>
+<code> [31]                      ⎕EN ⎕SIGNAL⍨'Invalid definition, check: ',value</code>
+<code> [32]                  :EndTrap</code>
+<code> [33]              :EndIf</code>
+<code> [34]              :If ~0∊⍴value2</code>
+<code> [35]                  ⍎('Invalid definition: ',name)Signal 911/⍨~0 1∊⍨≡value2</code>
+<code> [36]              :EndIf</code>
+<code> [37]          :EndIf</code>
+<code> [38]          where←ref._Data[;5]⍳⊂NAME~','</code>
+<code> [39]          :If where&gt;≢ref._Data</code>
+<code> [40]              ref._Data⍪←name value2 value remark NAME</code>
+<code> [41]          :ElseIf ','∊name</code>
+<code> [42]              :If 0=≢2⊃ref._Data[where;] ⍝ Is it the first time?</code>
+<code> [43]                  ref._Data[where;4]←⊂¨ref._Data[where;4]</code>
+<code> [44]                  ref._Data[where;3]←⊂''</code>
+<code> [45]              :EndIf</code>
+<code> [46]              ref._Data[where;2]←⊂(2⊃ref._Data[where;]),⊂value2</code>
+<code> [47]              ref._Data[where;3]←⊂(3⊃ref._Data[where;]),⊂value</code>
+<code> [48]              ref._Data[where;4]←⊂(4⊃ref._Data[where;]),⊂remark</code>
+<code> [49]          :Else</code>
+<code> [50]              ref._Data[where;2 3 4]←value2 value remark</code>
+<code> [51]          :EndIf</code>
+<code> [52]      :EndIf</code>
+<code> [53]  :EndFor</code>
+</div>
+<code class="header" id="listing_6">#.IniFiles.IniFiles.Delete &mdash; 89%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  {r}←Delete name</code>
+<code> [1]   :Access Public</code>
+<code> [2]      ⍝ Delete a key or a section. Returns 1 if there was something to delete.</code>
+<code> [3]      ⍝</code>
+<code> [4]      ⍝ To delete "myKey" from "MySection":</code>
+<code> [5]      ⍝ ~~~</code>
+<code> [6]      ⍝ `('MySection' 'MyKey')`</code>
+<code> [7]      ⍝ ~~~</code>
+<code> [8]      ⍝ "name" can also be a nested vector:</code>
+<code> [9]      ⍝ ~~~</code>
+<code> [10]     ⍝ `(('SectionA' 'key1') ('SectionA' 'key2'))`</code>
+<code> [11]     ⍝ ~~~</code>
+<code> [12]     ⍝ or a full name like:</code>
+<code> [13]     ⍝ ~~~</code>
+<code> [14]     ⍝ `('section:key') or (('section:key1') ('section:key1'))`</code>
+<code> [15]     ⍝ ~~~</code>
+<code> [16]     ⍝ Note that `('section' ('key1' 'key2'))` is **not** a valid syntax.</code>
+<code> [17]     ⍝</code>
+<code> [18]     ⍝ To delete an entire section:</code>
+<code> [19]     ⍝ ~~~</code>
+<code> [20]     ⍝ `Delete 'foo:'`</code>
+<code> [21]     ⍝ ~~~</code>
+<code> [22]     ⍝ If `name` is a vector of names, `Delete` calls itself recursively.</code>
+<code> [23]     ⍝ Mixed syntax is **not** supported, so use one of:</code>
+<code> [24]     ⍝ ~~~</code>
+<code> [25]     ⍝ Delete ('sectiona' 'key1')('otherSection' 'key2')('thirdSection' '')</code>
+<code> [26]     ⍝ Delete ('sectiona:key1' 'otherSection:key2' 'thirdSection:')</code>
+<code> [27]     ⍝ ~~~</code>
+<code> [28]  r←0</code>
+<code> [29]  :If 0 1∊⍨≡name</code>
+<code> [30]      ⍎'Invalid right argument'Signal 11/⍨1≠':'+.=name</code>
+<code> [31]      (section key)←' '~¨⍨2↑1 ⎕C':'(≠⊆⊢)name</code>
+<code> [32]      section←'_',section</code>
+<code> [33]      :If 0=≢key</code>
+<code> [34]          :If 9=⎕NC section</code>
+<code> [35]              ⎕EX section</code>
+<code> [36]              _Sections←(_SECTIONS≢¨⊂section)/_Sections</code>
+<code> [37]              r←_changed←1</code>
+<code> [38]          :EndIf</code>
+<code> [39]      :Else</code>
+<code> [40]               ⍝key←{⍵∧.=' ':'' ⋄ ⍵}key</code>
+<code> [41]          (section key)←1 ⎕C':'(≠⊆⊢)name</code>
+<code> [42]          section←'_',section</code>
+<code> [43]          :If (⊂section)∊_SECTIONS</code>
+<code> [44]              TOC←{⍵._Data[;5]}ref←⍎section</code>
+<code> [45]          :AndIf r←0&lt;+/bool←(⊂key)≡¨TOC</code>
+<code> [46]              ref._Data⌿⍨←~bool</code>
+<code> [47]              r←_changed←1</code>
+<code> [48]          :EndIf</code>
+<code> [49]      :EndIf</code>
+<code> [50]  :Else</code>
+<code> [51]      :If 0 1∊⍨≡2⊃name</code>
+<code> [52]          :If 2=|≡name</code>
+<code> [53]          :AndIf ~':'∊1⊃,name</code>
+<code> [54]              r←Delete⊃{⍺,':',⍵}/name</code>
+<code> [55]          :Else</code>
+<code> [56]              r←Delete¨name</code>
+<code> [57]          :EndIf</code>
+<code> [58]      :Else</code>
+<code> [59]          :If 3=|≡name</code>
+<code> [60]          :AndIf 1 2≡≡¨name</code>
+<code> [61]              r←Delete¨(⊂name[1]),¨⊂¨2⊃name</code>
+<code> [62]          :Else</code>
+<code class="emphasize">→[63]              r←⍬</code>
+<code class="emphasize">→[64]              :For this :In name</code>
+<code class="emphasize">→[65]                  r,←Delete this</code>
+<code> [66]              :EndFor</code>
+<code> [67]          :EndIf</code>
+<code> [68]      :EndIf</code>
+<code> [69]  :EndIf</code>
+</div>
+<code class="header" id="listing_7">#.IniFiles.IniFiles.CheckValues &mdash; 93%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (oldStyleFlag DM EN)←CheckValues(data filename)</code>
+<code> [1]       ⍝ Returns either ({boolean} '' ⍬) or ({Boolean} 'Error msg' {number}) with</code>
+<code> [2]       ⍝ Boolean being OldStyleFlag.</code>
+<code> [3]       ⍝</code>
+<code> [4]       ⍝ Therefore the result can be used for a ⎕SIGNAL statement.</code>
+<code> [5]       ⍝</code>
+<code> [6]       ⍝ We don't have to worry about comments and trailing blanks: handled by now.</code>
+<code> [7]       ⍝</code>
+<code> [8]       ⍝ Side effect: sets global /_oldStyleFlag</code>
+<code> [9]   (oldStyleFlag DM EN)←¯1 '' 0      ⍝ ¯1: not decided yet. As soon it is something else the case is settled</code>
+<code> [10]  bool←0&lt;≢¨A.DLB data</code>
+<code> [11]  lnos←bool/⍳⍴data                  ⍝ Create line numbers</code>
+<code> [12]  data←bool/data                    ⍝ Drop empty lines</code>
+<code> [13]  bool←';'≠⊃¨data                   ⍝ Pure comment lines</code>
+<code> [14]  (data lnos)←bool∘/¨data lnos      ⍝ Get rid of all comment lines from data &amp; lnos</code>
+<code> [15]  :If ∨/b←'!'=⊃¨data</code>
+<code> [16]  :AndIf ∨/b←b\'!IMPORT'∘{⍺≡1 ⎕C(⍴⍺)↑⍵}¨b/data</code>
+<code> [17]      oldStyleFlag←0                ⍝ Now we know it's not an old-style file.</code>
+<code> [18]      (data lnos)←(⊂~b)/¨data lnos</code>
+<code> [19]  :EndIf</code>
+<code> [20]  :If ¯1=oldStyleFlag</code>
+<code> [21]  :AndIf ~0∊⍴(¯1+(⊃¨data)⍳'[')↑data ⍝ Local variables?!</code>
+<code> [22]      oldStyleFlag←0                ⍝ Now we know it's not an old-style file.</code>
+<code> [23]      bool←~∧\'['≠⊃¨data            ⍝ Where does the real stuff starts (first section)?</code>
+<code> [24]      (data lnos)←bool∘/¨data lnos  ⍝ Remove the local variables</code>
+<code> [25]  :EndIf</code>
+<code> [26]  bool←'['≠⊃¨data                   ⍝ Which are not sections?</code>
+<code> [27]  (data lnos)←bool∘/¨data lnos      ⍝ Get rid of them</code>
+<code> [28]  :If ∨/b←~'='∊¨{⍵↑⍨¯1+⍵⍳''''}data</code>
+<code> [29]      DM←'Check line',((1≠+/b)/'s'),' ',(⊃{⍺,',',⍵}/⍕¨b/lnos),' of ',filename</code>
+<code> [30]      EN←11</code>
+<code> [31]      :Return</code>
+<code> [32]  :EndIf</code>
+<code> [33]  vals←A.DLB{⍵↓⍨⍵⍳'='}¨data           ⍝ Remove the assigment as such.</code>
+<code> [34]  swq←''''=⊃¨vals                   ⍝ Start With Quote</code>
+<code> [35]  ewq←''''=⊃¨¯1⌽¨vals               ⍝ Ends with quotes</code>
+<code> [36]  in←{∧/{⍵↑⍨1⌈⍴⍵}1⊃⎕VFI ⍵}¨vals     ⍝ "Is Numeric" flag</code>
+<code> [37]  emptyFlag←0=⊃∘⍴¨vals              ⍝ Empty is allowed only in old-style</code>
+<code> [38]  :If ¯1=oldStyleFlag</code>
+<code> [39]      :If 2=⍴∪(~in)/swq+ewq</code>
+<code> [40]          DM←filename,' is inconsistent - neither old-style nor new-style; check line(s) ',⍕⍸bool\in⍱swq∧ewq</code>
+<code> [41]          EN←11</code>
+<code> [42]          :Return</code>
+<code> [43]      :Else</code>
+<code> [44]          oldStyleFlag←~(0∊⍴data)∨∧/in∨2=swq+ewq   ⍝ Locals only? All fine?!</code>
+<code> [45]      :EndIf</code>
+<code> [46]  :EndIf</code>
+<code> [47]  :If ¯1=oldStyleFlag</code>
+<code class="emphasize">→[48]      oldStyleFlag←0                ⍝ We don't know otherwise, so we assume "no"</code>
+<code> [49]  :EndIf</code>
+<code> [50]  :If oldStyleFlag</code>
+<code> [51]      :If ∨/b←~(swq+ewq)∊0 2</code>
+<code class="emphasize">→[52]          DM←filename,' is invalid: ',⊃,/{⍺,',',⍵}/b/data~¨'''' ⋄ EN←11</code>
+<code> [53]      :EndIf</code>
+<code> [54]  :Else</code>
+<code> [55]      :If ∨/b←(~in)∧2≠swq+ewq</code>
+<code> [56]          DM←filename,' is inconsistent: ',⊃,/{⍺,',',⍵}/b/data ⋄ EN←11</code>
+<code> [57]      :ElseIf ∨/emptyFlag</code>
+<code class="emphasize">→[58]          DM←filename,' is inconsistent: ',⊃,/{⍺,',',⍵}/emptyFlag/data ⋄ EN←11</code>
+<code> [59]      :EndIf</code>
+<code> [60]  :EndIf</code>
+</div>
+<code class="header" id="listing_8">#.IniFiles.IniFiles.ProcessSections &mdash; 94%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  ProcessSections(data allRemarks)</code>
+<code> [1]   :For thisSection sectionRemarks :In ↓⍉↑data allRemarks</code>
+<code> [2]       this←'_','[ ]'~⍨1⊃thisSection</code>
+<code> [3]       ref←⍎1 ⎕C this</code>
+<code> [4]       ref.generalRemarks←⊂{⍵↓⍨+/∧\' '=⍵}1⊃sectionRemarks</code>
+<code> [5]       buffer←{i←⍵⍳'=' ⋄ ((i-1)↑⍵)(i↓⍵)}¨1↓thisSection</code>
+<code> [6]       :If OldStyleFlag</code>
+<code> [7]       :AndIf ∨/(0&lt;≢¨∊¨buffer)∧¯1=⊃∘⎕NC¨(⊃¨buffer)~¨' '</code>
+<code class="emphasize">→[8]           ⍎11 Signal⍨'Check value names: ',↑{⍺,',',⍵}/{(⊃¨⍵)/⍨(0&lt;≢¨∊¨⍵)∧¯1=⊃∘⎕NC¨⊃¨⍵}buffer</code>
+<code> [9]       :EndIf</code>
+<code> [10]      :If ∨/' '∊¨A.DLB A.DTB','~¨⍨⊃¨buffer</code>
+<code> [11]          ⍎11 Signal⍨'Invalid value name(s): ',⊃{⍺,', ',⍵}/{⍵/⍨' '∊¨⍵}⊃¨buffer</code>
+<code> [12]      :EndIf</code>
+<code> [13]      toc←' '~¨⍨1⊃¨buffer</code>
+<code> [14]      TOC←1 ⎕C toc</code>
+<code> [15]      buffer←2⊃¨{2↑⍵,'' ''}¨buffer</code>
+<code> [16]      EstablishValuesInSection(TOC toc buffer)</code>
+<code> [17]      :If 0=≢ref._Data</code>
+<code> [18]          ref.Remarks←''</code>
+<code> [19]      :Else</code>
+<code> [20]          ref.Remarks←sectionRemarks~↑,/{2=|≡⍵:⍵ ⋄ ⊂⍵}¨ref._Data[;4]  ⍝ ⊃ ←→ ↑ ?!</code>
+<code> [21]      :EndIf</code>
+<code> [22]  :EndFor</code>
+</div>
+<code class="header" id="listing_9">#.IniFiles.IniFiles.Exist &mdash; 94%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←Exist name</code>
+<code> [1]   :Access Public</code>
+<code> [2]      ⍝ Returns 1 if `name` exists. `name` can be either a nested vector like</code>
+<code> [3]      ⍝ ~~~</code>
+<code> [4]      ⍝ ('Section' 'key')</code>
+<code> [5]      ⍝ ~~~</code>
+<code> [6]      ⍝ or</code>
+<code> [7]      ⍝ ~~~</code>
+<code> [8]      ⍝ (('Section' 'key1') ('Section' 'key2'))</code>
+<code> [9]      ⍝ ~~~</code>
+<code> [10]     ⍝ or a full name like</code>
+<code> [11]     ⍝ ~~~</code>
+<code> [12]     ⍝ ('section:key')</code>
+<code> [13]     ⍝ ~~~</code>
+<code> [14]     ⍝  or</code>
+<code> [15]     ⍝ ~~~</code>
+<code> [16]     ⍝ (('section:key1') ('section:key1'))</code>
+<code> [17]     ⍝ ~~~</code>
+<code> [18]     ⍝ Note that `('section' ('key1' 'key2'))` is **not** a valid syntax.</code>
+<code> [19]     ⍝</code>
+<code> [20]     ⍝ To check the existence of a section use</code>
+<code> [21]     ⍝ ~~~</code>
+<code> [22]     ⍝ Exist 'foo:'</code>
+<code> [23]     ⍝ ~~~</code>
+<code> [24]     ⍝ If `name` is a vector of names, `Exist` calls itself recursively.</code>
+<code> [25]     ⍝</code>
+<code> [26]     ⍝ Mixed syntax is **not** supported, so use one of:</code>
+<code> [27]     ⍝ ~~~</code>
+<code> [28]     ⍝ Exist ('section' 'key1')('otherSection' 'key2')('thirdSection' '')</code>
+<code> [29]     ⍝ Exist ('section:key1' 'otherSection:key2' 'thirdSection:')</code>
+<code> [30]     ⍝ ~~~</code>
+<code> [31]  :If 0 1∊⍨≡name</code>
+<code> [32]      (section key)←' '~¨⍨1 ⎕C 2↑':'(≠⊆⊢)name</code>
+<code> [33]      section←'_',section</code>
+<code> [34]      :If 0∊⍴key</code>
+<code> [35]          r←⊃9=⎕NC section</code>
+<code> [36]      :Else</code>
+<code> [37]          key←{⍵∧.=' ':'' ⋄ ⍵}key</code>
+<code> [38]          :If 0∊⍴key</code>
+<code class="emphasize">→[39]              r←(⊂section)∊_SECTIONS</code>
+<code> [40]          :Else</code>
+<code> [41]              :If r←(⊂section)∊_SECTIONS</code>
+<code> [42]                  ref←⍎section</code>
+<code> [43]                  r←(⊂key)∊ref._Data[;5]</code>
+<code> [44]              :EndIf</code>
+<code> [45]          :EndIf</code>
+<code> [46]      :EndIf</code>
+<code> [47]  :Else</code>
+<code> [48]      :If ∧/':'∊¨name</code>
+<code> [49]          r←Exist¨name</code>
+<code> [50]      :Else</code>
+<code> [51]          :If 3=|≡name</code>
+<code> [52]              ⍎'Mixed syntax not eligible'Signal 11/⍨(∨/':'∊¨name)∧(∨/2=|≡¨name)</code>
+<code> [53]              r←Exist¨name</code>
+<code> [54]          :Else</code>
+<code> [55]              r←Exist⊃{⍺,':',⍵}/name</code>
+<code> [56]          :EndIf</code>
+<code> [57]      :EndIf</code>
+<code> [58]  :EndIf</code>
+</div>
+<code class="header" id="listing_10">#.IniFiles.IniFiles.Import &mdash; 96%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (r data allRemarks)←Import(data allRemarks)</code>
+<code> [1]   bool←∨/¨'!Import'∘⍷¨data                  ⍝ Where are the files to be imported?</code>
+<code> [2]   lnos←⍳⍴data                               ⍝ Create Line Numbers</code>
+<code> [3]   il←bool⌿data                              ⍝ Create it (Import List)</code>
+<code> [4]   ilRemarks←bool/allRemarks                 ⍝ Remarks belonging to !Import</code>
+<code> [5]   ⍎'!Import statement must not have a remark'Signal 911/⍨0∨.&lt;≢¨ilRemarks</code>
+<code> [6]   data←(~bool)/data                         ⍝ Remove the "!Import" lines from "data" numbers</code>
+<code> [7]   lnos←bool/lnos                            ⍝ Remove the "!Import" lines from the line numbers</code>
+<code> [8]   allRemarks←(~bool)/allRemarks             ⍝ Remove the "!Import" lines from "allRemarks"</code>
+<code> [9]   il←(+/∧\' '=↑il)↓¨il                      ⍝ Drop any leading blanks</code>
+<code> [10]  il←⎕C¨(il⍳¨' ')↓¨il                       ⍝ Drop method name, leaving the filenames</code>
+<code> [11]  refToIniFile←⊃1⊃⎕CLASS ⎕THIS              ⍝ Ref to itself</code>
+<code> [12]  r←0 3⍴⊂''</code>
+<code> [13]  :For this :In il</code>
+<code> [14]      :If (~':'∊this)∧~(1⍴this)∊'/\'        ⍝ Does not start with / and has no drive letter?</code>
+<code> [15]          fullName←(⊃1 ⎕NPARTS''),'\',this  ⍝ Then make it absolute</code>
+<code> [16]      :Else</code>
+<code class="emphasize">→[17]          fullName←this                     ⍝ Is already absolute</code>
+<code> [18]      :EndIf</code>
+<code> [19]      fullName←⊃,/1 ⎕NPARTS fullName</code>
+<code> [20]      'Tries to import itself'⎕SIGNAL 11/⍨(⊂⎕C fullName)∊⎕C _IniFilename</code>
+<code> [21]      temp←(⎕NEW refToIniFile(fullName _debugFlag)).Convert ⎕NS''  ⍝ Create an instance</code>
+<code> [22]      buff←temp.List''</code>
+<code> [23]      buff[;3]←DoubleCurlies¨buff[;3]</code>
+<code> [24]      r⍪←buff</code>
+<code> [25]  :EndFor</code>
+<code> [26]  _import←0&lt;1⊃⍴r</code>
+</div>
+<code class="header" id="listing_11">#.IniFiles.IniFiles.set_IniFilename &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_12">#.IniFiles.IniFiles.get_IniFilename &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_IniFilename</code>
+<code> [1]  r←{0∊⍴⍵:1⊃⍵ ⋄ ↑{⍺,';',⍵}/⍵}_IniFilename</code>
+</div>
+<code class="header" id="listing_13">#.IniFiles.IniFiles.set_Default &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Default arg</code>
+<code> [1]  _default←arg.NewValue</code>
+</div>
+<code class="header" id="listing_14">#.IniFiles.IniFiles.get_Default &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Default</code>
+<code> [1]  ⍎'No default defined!'Signal 6/⍨0=⎕NC'_default'</code>
+<code> [2]  r←_default</code>
+</div>
+<code class="header" id="listing_15">#.IniFiles.IniFiles.set_OldStyleFlag &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_16">#.IniFiles.IniFiles.get_OldStyleFlag &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_OldStyleFlag</code>
+<code> [1]  r←_oldStyleFlag</code>
+</div>
+<code class="header" id="listing_17">#.IniFiles.IniFiles.set_EstablishedAt &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_18">#.IniFiles.IniFiles.get_EstablishedAt &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_EstablishedAt</code>
+<code> [1]  r←_EstablishedAt</code>
+</div>
+<code class="header" id="listing_19">#.IniFiles.IniFiles.set_Changed &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_20">#.IniFiles.IniFiles.get_Changed &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Changed</code>
+<code> [1]  r←_changed</code>
+</div>
+<code class="header" id="listing_21">#.IniFiles.IniFiles.set_keyed default data &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_22">#.IniFiles.IniFiles.get_keyed default data &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_23">#.IniFiles.IniFiles.History &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  History</code>
+<code> [1]   :Access Public Shared</code>
+<code> [2]        ⍝ * 5.1.0 ⋄ 2022-08-04</code>
+<code> [3]        ⍝   * Author information updated</code>
+<code> [4]        ⍝   * ...</code>
+<code> [5]        ⍝ * 5.0.3</code>
+<code> [6]        ⍝   * `GetIniFiles` did not work under Linux/Mac-OS</code>
+<code> [7]        ⍝   * Now managed by Cider</code>
+<code> [8]        ⍝ * 5.0.2</code>
+<code> [9]        ⍝   * Package config file corrected</code>
+<code> [10]       ⍝ * 5.0.1</code>
+<code> [11]       ⍝   * Internal change: `Uppercase` and Lowercase` replaced by calles to `⎕C`.</code>
+<code> [12]       ⍝ * 5.0.0</code>
+<code> [13]       ⍝   * BREAKING CHANGES:</code>
+<code> [14]       ⍝     * Does not now requires the class `APLTreeUtils2`</code>
+<code> [15]       ⍝     * Requires at least Dyalog 18.0</code>
+<code> [16]       ⍝   * `IniFiles` does not :Include APLTreeUtils anymore</code>
+<code> [17]       ⍝   * Bug fix: in case a value was added with `Put` the `Changed` property was not set to 1.</code>
+<code> [18]       ⍝   * Internally now `⎕ML←1` is used.</code>
+<code> [19]       ⍝\\</code>
+<code> [20]       ⍝ For information regarding older versions see &lt;https://github.com/aplteam/IniFiles/releases&gt;</code>
+</div>
+<code class="header" id="listing_24">#.IniFiles.IniFiles.GetSections &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←GetSections</code>
+<code> [1]     ⍝ Returns a vector of strings with sections names.</code>
+<code> [2]  :Access Public Instance</code>
+<code> [3]  r←1 ⎕C 1↓¨_Sections</code>
+</div>
+<code class="header" id="listing_25">#.IniFiles.IniFiles.GetIniFiles &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←GetIniFiles filename</code>
+<code> [1]   :Access Public Shared</code>
+<code> [2]      ⍝ Returns a list of INI files.\\</code>
+<code> [3]      ⍝ Let's assume that "foo.ini" ←→ filename. Let's also assume that the current computer's name is "JohnDoe".</code>
+<code> [4]      ⍝ Finally let's assume that there are two INI files in the current directory:</code>
+<code> [5]      ⍝ * foo.ini</code>
+<code> [6]      ⍝ * foo_johndoe.ini\\</code>
+<code> [7]      ⍝ Then `GetIniFiles` returns:\\</code>
+<code> [8]      ⍝ `'foo.ini' 'foo_johndoe,ini' ← #.IniFiles.GetIniFiles`\\</code>
+<code> [9]      ⍝ If there is no file foo_johndoe.ini however then the result is:\\</code>
+<code> [10]     ⍝ `'foo.ini' ← #.IniFiles.GetIniFiles`</code>
+<code> [11]  A←(⊃⊃⎕CLASS ⎕THIS).##.⍎'APLTreeUtils2'</code>
+<code> [12]  (p fn)←{('\'∊⍵):A.SplitPath ⍵ ⋄ ''⍵}filename</code>
+<code> [13]  (fn ext)←{('.'∊⍵):'.'A.SplitPath ⍵ ⋄ (⍵,'.')'ini'}fn</code>
+<code> [14]  f1←⎕NEXISTS fn1←p,fn,ext</code>
+<code> [15]  f2←⎕NEXISTS fn2←p,(¯1↓fn),'_',GetComputerName,'.',ext</code>
+<code> [16]  ⍎('Could not find ',fn1)Signal 6/⍨f1=0</code>
+<code> [17]  r←(f1/⊂fn1),f2/⊂fn2</code>
+</div>
+<code class="header" id="listing_26">#.IniFiles.IniFiles.make0 &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> make0</code>
+<code> [1]       ⍝ No parameter: Creates a new INI file by definition</code>
+<code> [2]  :Implements Constructor</code>
+<code> [3]  :Access Public</code>
+<code> [4]  Init ⍬</code>
+<code> [5]  CallCreate''</code>
+</div>
+<code class="header" id="listing_27">#.IniFiles.IniFiles.make1 &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> make1(IniFilename)</code>
+<code> [1]       ⍝ Takes the name of one or more INI files to be processed as parameter.</code>
+<code> [2]  :Implements Constructor</code>
+<code> [3]  :Access Public</code>
+<code> [4]  Init ⍬</code>
+<code> [5]  CallCreate IniFilename</code>
+</div>
+<code class="header" id="listing_28">#.IniFiles.IniFiles.make2 &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  make2(IniFilename debugFlag)</code>
+<code> [1]   :Implements Constructor</code>
+<code> [2]   :Access Public</code>
+<code> [3]        ⍝ Takes the name of the INI file and what originally was supposed</code>
+<code> [4]        ⍝ to be a reference to the `UnicodeFile` class as parameters.\\</code>
+<code> [5]        ⍝ However, that property is not needed any longer (since version 1.6),</code>
+<code> [6]        ⍝ and for that reason the argument `debugFlag` is ignored when it is</code>
+<code> [7]        ⍝ a string. If it is a Boolean then however it is treated as a debug</code>
+<code> [8]        ⍝ flag. It default is 0 but one can specify a 1.</code>
+<code> [9]        ⍝</code>
+<code> [10]       ⍝ Setting it to 1 has two effects:</code>
+<code> [11]       ⍝ * All error trapping is deactivated.</code>
+<code> [12]       ⍝ * Instead of signalling an error the program stops.</code>
+<code> [13]  Init ⍬</code>
+<code> [14]  _debugFlag←{((⊂⍵)∊0 1):⍵ ⋄ 0}debugFlag</code>
+<code> [15]  'Invalid parameter: "debugFlag"; not a boolean'⎕SIGNAL 11/⍨∨/~_debugFlag∊0 1</code>
+<code> [16]  CallCreate IniFilename</code>
+</div>
+<code class="header" id="listing_29">#.IniFiles.IniFiles.Init &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> Init dummy</code>
+<code> [1]  ⎕ML←1 ⋄ ⎕IO←1</code>
+<code> [2]  _import←0</code>
+<code> [3]  _debugFlag←0</code>
+<code> [4]  _EN←⍬</code>
+<code> [5]  _EstablishedAt←Timestamp2Float ⎕TS</code>
+<code> [6]  A←(⊃⊃⎕CLASS ⎕THIS).##.APLTreeUtils2</code>
+</div>
+<code class="header" id="listing_30">#.IniFiles.IniFiles.Create &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  Create IniFilename</code>
+<code> [1]       ⍝ Called by the official constructors</code>
+<code> [2]   _changed←_oldStyleFlag←0</code>
+<code> [3]   _Sections←''</code>
+<code> [4]   ⎕TRAP←(1+_debugFlag)⊃((0 'C' '_EN←⎕en ⋄ (⎕IO⊃⎕DM)⎕signal 911'))((0 1000)'S')</code>
+<code> [5]   :If 0≠≢_IniFilename←IniFilename</code>
+<code> [6]       _IniFilename←CheckExtension¨_IniFilename</code>
+<code> [7]       (data _oldStyleFlag allRemarks)←EvaluateINIs _IniFilename</code>
+<code> [8]       import←''</code>
+<code> [9]       :If 0&lt;+/∨/¨'!Import'∘⍷¨data</code>
+<code> [10]          :Trap 911</code>
+<code> [11]              (import data allRemarks)←Import data allRemarks</code>
+<code> [12]          :Else</code>
+<code> [13]              ⍎911 Signal⍨1⊃⎕DM</code>
+<code> [14]          :EndTrap</code>
+<code> [15]      :EndIf</code>
+<code> [16]      :Trap 911</code>
+<code> [17]          (data locals allRemarks)←GetLocals data allRemarks</code>
+<code> [18]      :Else</code>
+<code> [19]          ⍎911 Signal⍨1⊃⎕DM</code>
+<code> [20]      :EndTrap</code>
+<code> [21]      data←{(0=≢⍵):⍵ ⋄ ⊃,/SortSection¨⍵}SplitSections data</code>
+<code> [22]      :If 0≠≢import</code>
+<code> [23]          (data allRemarks)←MergeImport import data allRemarks</code>
+<code> [24]      :EndIf</code>
+<code> [25]      :If 0≠≢data</code>
+<code> [26]          sep←+\'['=⊃¨data</code>
+<code> [27]          (data allRemarks)←sep∘{⎕ML←3 ⋄ ⍺⊂⍵}¨data allRemarks</code>
+<code> [28]          :If ∨/invalid←(' '∊¨~∘'[]'∘⊃¨data)∨¯1=⊃∘⎕NC¨~∘'[ ]'∘⊃¨data</code>
+<code> [29]              ⍎11 Signal⍨'Invalid section name(s): ',⊃{⍺,', ',⍵}/invalid/⊃¨data</code>
+<code> [30]          :EndIf</code>
+<code> [31]      :AndIf 0≠≢_Sections←'_',¨∪~∘'[ ]'∘⊃¨data</code>
+<code> [32]          ⎕NS∘''¨sec←1 ⎕C _Sections</code>
+<code> [33]          (⍎¨sec)._Data←⊂0 5⍴''</code>
+<code> [34]          ProcessSections data allRemarks</code>
+<code> [35]      :EndIf</code>
+<code> [36]  :EndIf</code>
+<code> [37]  ⎕DF(⍕⎕THIS),' on &lt;',({0∊⍴⍵:⍵ ⋄ ↑{⍺,';',⍵}/⍵}_IniFilename),'&gt;'</code>
+</div>
+<code class="header" id="listing_31">#.IniFiles.IniFiles.Convert &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←{type}Convert r</code>
+<code> [1]   :Access Public</code>
+<code> [2]      ⍝ Takes a ref to a (typically empty) namespace and populates it with the values</code>
+<code> [3]      ⍝ defined by the INI file entries.\\</code>
+<code> [4]      ⍝ If the optional left argument is "flat", sections are ignored and every entry</code>
+<code> [5]      ⍝ gets a simple variable.\\</code>
+<code> [6]      ⍝ If it's not "flat" then section names are used as names for sub-namespaces.\\</code>
+<code> [7]      ⍝ Note that `Convert` will fail if the names used for sections and values</code>
+<code> [8]      ⍝ are not proper APL names.\\</code>
+<code> [9]      ⍝ `Convert` injects a method `List` into the resulting namespace which</code>
+<code> [10]     ⍝ prints a matrix to the session with all names and values.</code>
+<code> [11]  type←{0&lt;⎕NC ⍵:⍎⍵ ⋄ ''}'type'</code>
+<code> [12]  ⍎'Left argument must be either empty or "flat"'Signal 11/⍨~(0∊⍴type)∨'flat'≡type</code>
+<code> [13]  data←Get ⍬ ⍬</code>
+<code> [14]  :If 'flat'≡type</code>
+<code> [15]      :If 0≠≢data←(0&lt;≢¨data[;2])⌿data                   ⍝ Isolate pure data</code>
+<code> [16]          (theseNames theseValues)←↓⍉data[;2 3]         ⍝ All the names and values</code>
+<code> [17]          theseNames r.{⍎⍺,'←⍵'}¨theseValues            ⍝ Assign the values to the names</code>
+<code> [18]      :EndIf</code>
+<code> [19]      r.⎕FX'r←List;⎕IO;⎕ML' '(⎕IO ⎕ML)←0 3' 'r←{⍵,[.5]⍎¨⍵}⎕nl -2'  ⍝ Establish method "List"</code>
+<code> [20]  :Else</code>
+<code> [21]      allValues←data[;3]</code>
+<code> [22]      :For thisSection :In data[;1]~⊂''                 ⍝ Loop over sections</code>
+<code> [23]          s←data[;1]⍳⊂thisSection                       ⍝ Where does the section start?</code>
+<code> [24]          :If 0&lt;noOf←{+/∧\0=≢¨⍵}s↓data[;1]              ⍝ How many entries has the section?</code>
+<code> [25]              rf←⍎'r.',thisSection,'←⎕NS'''''           ⍝ Create a namespace name after the section</code>
+<code> [26]              rf.⎕DF thisSection                        ⍝ Set the display format</code>
+<code> [27]              theseNames←noOf↑s↓data[;2]                ⍝ All the names and ...</code>
+<code> [28]              theseValues←noOf↑s↓allValues              ⍝ ... values of this section</code>
+<code> [29]              :If ¯1∊⊃∘⎕NC¨theseNames</code>
+<code> [30]                  ⍎11 Signal⍨'Invalid value name(s): ',{⊃{⍺,', ',⍵}/⍵/⍨¯1=⊃∘⎕NC¨⍵}theseNames</code>
+<code> [31]              :EndIf</code>
+<code> [32]              theseNames rf.{⍎⍺,'←⍵'}¨theseValues       ⍝ Assign values to names inside that namespace</code>
+<code> [33]          :EndIf</code>
+<code> [34]      :EndFor</code>
+<code> [35]      code←''</code>
+<code> [36]      code,←⊂' r←List section;toc;section_U;ind'</code>
+<code> [37]      code,←⊂'⍝ If "section" is empty or "*", all sections are returned'</code>
+<code> [38]      code,←⊂' ⎕IO←1 ⋄ ⎕ML←1'</code>
+<code> [39]      code,←⊂' r←'''''</code>
+<code> [40]      code,←⊂' :If (0∊⍴section)∨(,''*'')≡,section'</code>
+<code> [41]      code,←⊂'     :If ~0∊⍴⎕NL-9'</code>
+<code> [42]      code,←⊂'         r←↑⍪/{⍵,⍵.{{⎕IO←0 ⋄ ⎕ML←3 ⋄ ⍵,[0.5]⍎¨⍵}⎕NL-2}⍵}¨⍎¨⎕NL-9'</code>
+<code> [43]      code,←⊂'     :EndIf'</code>
+<code> [44]      code,←⊂' :Else'</code>
+<code> [45]      code,←⊂'     ''Invalid right argument''⎕SIGNAL 11/⍨~(≡section)∊0 1'</code>
+<code> [46]      code,←⊂'     toc←⎕NL-9'</code>
+<code> [47]      code,←⊂'     section_U←1(819⌶)section'</code>
+<code> [48]      code,←⊂'     :If (⊂section_U)∊toc'</code>
+<code> [49]      code,←⊂'         ind←toc⍳⊂section_U'</code>
+<code> [50]      code,←⊂'         r←{⍵.{{⎕IO←0 ⋄ ⎕ML←3 ⋄ ⍵,[0.5]⍎¨⍵}⎕NL-2}⍵}⍎ind⊃toc'</code>
+<code> [51]      code,←⊂'     :EndIf'</code>
+<code> [52]      code,←⊂' :EndIf'</code>
+<code> [53]      r.⎕FX code                                        ⍝ Establish method "List"</code>
+<code> [54]  :EndIf</code>
+</div>
+<code class="header" id="listing_32">#.IniFiles.IniFiles.Get &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←{default}Get name</code>
+<code> [1]      ⍝ Returns the (enclosed) value for a single value or a vector of values</code>
+<code> [2]      ⍝ if more than one key was provided.\\</code>
+<code> [3]      ⍝ `name` might be one of:</code>
+<code> [4]      ⍝ * `('sectionName' 'key')`</code>
+<code> [5]      ⍝ * `(('sectionName' 'key1')('sectionName' 'key2'))`</code>
+<code> [6]      ⍝ * `'sectionName:key'`</code>
+<code> [7]      ⍝ * `('sectionName:key1' 'sectionName:key2')`</code>
+<code> [8]      ⍝</code>
+<code> [9]      ⍝ Note that mixed syntax is not supported:</code>
+<code> [10]     ⍝ ~~~</code>
+<code> [11]     ⍝ ('sectionName' ('key1' 'key2')) ⍝  invalid!</code>
+<code> [12]     ⍝ ('sectionName' 'key1') 'sectionName:key2' ⍝  invalid!</code>
+<code> [13]     ⍝ ~~~</code>
+<code> [14]     ⍝ If "key" is empty, **all** values of that sections are returned.\\</code>
+<code> [15]     ⍝ If a requested value is not available, "default" (the left argument)</code>
+<code> [16]     ⍝ is returned if specified, otherwise the property "Default" is returned</code>
+<code> [17]     ⍝ if specified; otherwise an interrupt is signalled.</code>
+<code> [18]  :Access Public</code>
+<code> [19]  :If 0=⎕NC'default'</code>
+<code> [20]      r←Get_ name</code>
+<code> [21]  :Else</code>
+<code> [22]      r←default Get_ name</code>
+<code> [23]  :EndIf</code>
+</div>
+<code class="header" id="listing_33">#.IniFiles.IniFiles.Put &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  {r}←data Put name</code>
+<code> [1]      ⍝ Set `name` to `data`.\\</code>
+<code> [2]      ⍝ Note that `name` can be:</code>
+<code> [3]      ⍝ * A simple string. Must provide both, a "section" and a `name`,</code>
+<code> [4]      ⍝   separated by a colon as in "section:key"</code>
+<code> [5]      ⍝ * A nested vector of length 2.</code>
+<code> [6]      ⍝</code>
+<code> [7]      ⍝ Examples for the latter:</code>
+<code> [8]      ⍝ ~~~</code>
+<code> [9]      ⍝ `1⊃name ←→ section name`</code>
+<code> [10]     ⍝ `2⊃name ←→ key (or entry name)`</code>
+<code> [11]     ⍝ ~~~</code>
+<code> [12]  :Access Public</code>
+<code> [13]  r←⍬</code>
+<code> [14]  data Put_ name</code>
+</div>
+<code class="header" id="listing_34">#.IniFiles.IniFiles.Put_ &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  data Put_ name</code>
+<code> [1]   :If 0 1∊⍨≡name</code>
+<code> [2]       ⍎'Must be specified as "sectionName:key"'Signal 11/⍨~':'∊name</code>
+<code> [3]       (section key)←{a←⍵⍳':' ⋄ (⍵↑⍨a-1)(a↓⍵)}name</code>
+<code> [4]   :Else</code>
+<code> [5]       (section key)←name</code>
+<code> [6]   :EndIf</code>
+<code> [7]   section←'_',section</code>
+<code> [8]   (SECTION KEY)←1 ⎕C(section key)</code>
+<code> [9]   :If (⊂SECTION)∊_SECTIONS</code>
+<code> [10]      where←_SECTIONS⍳⊂SECTION</code>
+<code> [11]      ref←⍎SECTION</code>
+<code> [12]  :Else</code>
+<code> [13]      ⍎6 Signal⍨'Unkown section; (consider executing "AddSection")'</code>
+<code> [14]  :EndIf</code>
+<code> [15]  KEYS←ref._Data[;5]</code>
+<code> [16]  :If (⎕DR data)∊11 83 645</code>
+<code> [17]      buffer←data(⍕data)</code>
+<code> [18]  :Else</code>
+<code> [19]      :If 2=|≡data</code>
+<code> [20]          buffer←({ReplaceCurlies KEYS ⍵}¨data)({'''',⍵,''''}¨,data)</code>
+<code> [21]      :Else</code>
+<code> [22]          buffer←(ReplaceCurlies KEYS data)('''',data,'''')</code>
+<code> [23]      :EndIf</code>
+<code> [24]  :EndIf</code>
+<code> [25]  :If (⊂KEY)∊KEYS</code>
+<code> [26]      where←KEYS⍳⊂KEY</code>
+<code> [27]      :If ~_changed</code>
+<code> [28]          _changed←data≢2⊃ref._Data[where;]</code>
+<code> [29]      :EndIf</code>
+<code> [30]      ref._Data[where;2 3]←buffer</code>
+<code> [31]  :Else</code>
+<code> [32]      ref._Data⍪←(⊂key),buffer,(⊂''),⊂1 ⎕C key</code>
+<code> [33]      _changed←1</code>
+<code> [34]  :EndIf</code>
+</div>
+<code class="header" id="listing_35">#.IniFiles.IniFiles.AddSection &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  {r}←AddSection name</code>
+<code> [1]   ⍝ Adds a new section to the INI file.</code>
+<code> [2]   ⍝</code>
+<code> [3]   ⍝ Return a 1 if a section was added. A 0 is rerturned in case the section already exists.</code>
+<code> [4]   :Access Public</code>
+<code> [5]   NAME←1 ⎕C name←'_',name</code>
+<code> [6]   ⍎'Section name must be a valid APL name'Signal 11/⍨¯1=⎕NC NAME</code>
+<code> [7]   :If r←0=⎕NC NAME</code>
+<code> [8]       NAME ⎕NS''</code>
+<code> [9]       ref←⍎NAME</code>
+<code> [10]      ref._Data←0 5⍴''</code>
+<code> [11]      _Sections,←⊂name</code>
+<code> [12]      _changed←1</code>
+<code> [13]  :EndIf</code>
+</div>
+<code class="header" id="listing_36">#.IniFiles.IniFiles.HasInifileChanged &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> boolean←HasInifileChanged</code>
+<code> [1]    ⍝ Returns a 1 in case the (any) ini file has changed since the instance was created.\\</code>
+<code> [2]    ⍝ See also the `Changed` property.</code>
+<code> [3]  :Access Public Instance</code>
+<code> [4]  ts←{↑3 ⎕NINFO ⍵}¨_IniFilename</code>
+<code> [5]  boolean←_EstablishedAt∨.&lt;Timestamp2Float¨ts</code>
+</div>
+<code class="header" id="listing_37">#.IniFiles.IniFiles.Save &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  {oldFilename}←Save filename</code>
+<code> [1]   :Access Public</code>
+<code> [2]      ⍝ If `filename` is empty the INI is saved into the same file it originally came from.</code>
+<code> [3]      ⍝</code>
+<code> [4]      ⍝ Note that `Save` will throw a SYNTAX ERROR in case...</code>
+<code> [5]      ⍝ * the instance was defined by more than one INI file.</code>
+<code> [6]      ⍝ * another INI file was imported.</code>
+<code> [7]   ⍎'An INI file with !Import statement cannot be saved'Signal 11/⍨_import</code>
+<code> [8]   :If 1&lt;⍴_IniFilename</code>
+<code> [9]       ⍎11 Signal⍨'This INI instance was defined by more than one INI file; it therefore cannot be saved.'</code>
+<code> [10]  :EndIf</code>
+<code> [11]  oldFilename←_IniFilename</code>
+<code> [12]  :If ~0∊⍴filename</code>
+<code> [13]      _IniFilename←,⊂filename</code>
+<code> [14]  :EndIf</code>
+<code> [15]  _IniFilename←CheckExtension¨_IniFilename</code>
+<code> [16]  :If 0=⎕NC'locals'</code>
+<code> [17]  :OrIf 0∊⍴locals</code>
+<code> [18]      data←''</code>
+<code> [19]  :Else</code>
+<code> [20]      bool←∧\0=≢¨locals[;1]</code>
+<code> [21]      data←'; '∘,¨{⍵↓⍨+/∧\' '=⍵}¨bool⌿locals[;4]</code>
+<code> [22]      :For thisKey thisData origValue thisRemark thisKEY :In ↓(~bool)⌿locals</code>
+<code> [23]          buffer←(thisKey{0∊⍴⍺:⍺ ⋄ ⍺,⍵}'='),{0=1↑0⍴⍵:⍕⍵ ⋄ '''',(DoubleQuotes ⍵),''''}thisData</code>
+<code> [24]          :If ~0∊⍴thisRemark</code>
+<code> [25]              :If ''''''≡buffer</code>
+<code> [26]                  buffer←thisKey{⍵,⍨(~0∊⍴⍺)/(⎕UCS 9)}'; ',thisRemark</code>
+<code> [27]              :Else</code>
+<code> [28]                  buffer,←thisKey{⍵,⍨(~0∊⍴⍺)/(⎕UCS 9)}'; ',thisRemark</code>
+<code> [29]              :EndIf</code>
+<code> [30]          :EndIf</code>
+<code> [31]          data,←⊂buffer</code>
+<code> [32]      :EndFor</code>
+<code> [33]  :EndIf</code>
+<code> [34]  :For thisSection :In _Sections</code>
+<code> [35]      thisSection←1↓thisSection</code>
+<code> [36]      THISSECTION←1 ⎕C thisSection</code>
+<code> [37]      ref←⍎'_',THISSECTION</code>
+<code> [38]      :If 0=⎕NC'ref.generalRemarks'  ⍝ might not exist if the original filename was empty</code>
+<code> [39]          data,←⊂'[',THISSECTION,']'</code>
+<code> [40]      :Else</code>
+<code> [41]          data,←⊂'[',(THISSECTION),']',{⍵,⍨(~0∊⍴⍵)/(⎕UCS 9),'; '}1⊃1↑ref.generalRemarks</code>
+<code> [42]          data,←{⍵,⍨(~0∊⍴⍵)/'; '}¨1↓ref.generalRemarks</code>
+<code> [43]      :EndIf</code>
+<code> [44]      :For thisKey thisData origValue thisRemark :In ↓4↑[2]ref._Data</code>
+<code> [45]          buffer←''</code>
+<code> [46]          :If 0 1∊⍨≡thisData</code>
+<code> [47]              :If '{'∊origValue</code>
+<code> [48]                  buffer←thisKey,'=''',(DoubleQuotes⍎origValue),''''</code>
+<code> [49]              :Else</code>
+<code> [50]                  :If ''''''≡buffer←(thisKey{0∊⍴⍺:⍺ ⋄ ⍺,⍵}'='),{0=1↑0⍴⍵:⍕⍵ ⋄ '''',(DoubleQuotes ⍵),''''}thisData</code>
+<code> [51]                      buffer←''</code>
+<code> [52]                  :EndIf</code>
+<code> [53]              :EndIf</code>
+<code> [54]              :If ~0∊⍴thisRemark</code>
+<code> [55]                  buffer,←thisKey{⍵,⍨(~0∊⍴⍺)/(⎕UCS 9)}'; ',thisRemark</code>
+<code> [56]              :EndIf</code>
+<code> [57]              data,←⊂buffer</code>
+<code> [58]          :Else</code>
+<code> [59]              buffer←(⊂thisKey,'='''''),(⊂thisKey,',='),¨{0=1↑0⍴⍵:⍕⍵ ⋄ '''',(DoubleQuotes ⍵),''''}¨⍎¨origValue</code>
+<code> [60]              :If ~0∊⍴thisRemark</code>
+<code> [61]                  buffer,¨←{⍵,⍨(~0∊⍴⍵)/(⎕UCS 9),'; '}¨thisRemark</code>
+<code> [62]              :EndIf</code>
+<code> [63]              data,←buffer</code>
+<code> [64]          :EndIf</code>
+<code> [65]      :EndFor</code>
+<code> [66]  :EndFor</code>
+<code> [67]  bool←(';'≠⊃¨1⍴¨data)∧(⎕UCS 9)∊¨data</code>
+<code> [68]  where←bool\{⍵⍳(⎕UCS 9)}¨bool/data</code>
+<code> [69]  buffer←(⎕UCS 9)⍴¨⍨{⍵-⍨⌈/1+⍵}⌊4÷⍨≢¨(where-1)↑¨data</code>
+<code> [70]  :For i :In ⍳⍴,data</code>
+<code> [71]      :If i⊃bool</code>
+<code> [72]          this←i⊃data</code>
+<code> [73]          this[where[i]]←⊂i⊃buffer</code>
+<code> [74]          this←∊this</code>
+<code> [75]          (i⊃data)←this</code>
+<code> [76]      :EndIf</code>
+<code> [77]  :EndFor</code>
+<code> [78]  (⊂data)⎕NPUT(1⊃_IniFilename)1</code>
+</div>
+<code class="header" id="listing_38">#.IniFiles.IniFiles.DeleteDefault &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> {r}←DeleteDefault</code>
+<code> [1]     ⍝ As soon as the `Default` property is set, one can get rid of it only be calling</code>
+<code> [2]     ⍝ this method. Returns a 1 if there was a default, otherwise 0.</code>
+<code> [3]  :Access Public</code>
+<code> [4]  r←2=⎕NC'_default'</code>
+<code> [5]  ⎕EX'_default'</code>
+</div>
+<code class="header" id="listing_39">#.IniFiles.IniFiles.Help &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←Help</code>
+<code> [1]   :Access Public shared</code>
+<code> [2]   this←⊃¯1↑'.'##.APLTreeUtils2.Split⍕⎕THIS</code>
+<code> [3]   r←''</code>
+<code> [4]   r,←⊂'To provide a list of methods and properties use'</code>
+<code> [5]   r,←⊂'  ]ADOC -summary ',⍕this</code>
+<code> [6]   r,←⊂'To provide a full list of methods and properties use'</code>
+<code> [7]   r,←⊂'  ]ADOC  -summary=full',⍕this</code>
+<code> [8]   r,←⊂'To provide more details about methods and properties use'</code>
+<code> [9]   r,←⊂'  ]ADOC ',⍕this</code>
+<code> [10]  r,←⊂'A fully-fledged documentation is available at:'</code>
+<code> [11]  r,←⊂'http://aplwiki.com/IniFiles'</code>
+<code> [12]  r←↑r</code>
+</div>
+<code class="header" id="listing_40">#.IniFiles.IniFiles.CheckExtension &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←{extension}CheckExtension r</code>
+<code> [1]     ⍝ Add extension if there is no extension. Default is "ini"</code>
+<code> [2]  extension←{2=⎕NC ⍵:⍎⍵ ⋄ 'ini'}'extension'</code>
+<code> [3]  r←r,(~'.'∊{⍵↑⍨-⌊/'\/'⍳⍨⌽⍵}r)/'.',extension</code>
+</div>
+<code class="header" id="listing_41">#.IniFiles.IniFiles._SECTIONS &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←_SECTIONS</code>
+<code> [1]  r←1 ⎕C _Sections</code>
+</div>
+<code class="header" id="listing_42">#.IniFiles.IniFiles.ReplaceCurlies &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  value←ReplaceCurlies(toc value)</code>
+<code> [1]      ⍝ Replace `{foo}` with real data, if there are any curlies.</code>
+<code> [2]   value←ExchangeDoubleCourlies value'{'(⎕UCS 0)</code>
+<code> [3]   value←ExchangeDoubleCourlies value'}'(⎕UCS 1)</code>
+<code> [4]   :If ∧/'{}'∊value</code>
+<code> [5]       bool←{{⍵∨≠\⍵}⍵∊'{}'}value</code>
+<code> [6]       names←1 ⎕C bool/value</code>
+<code> [7]       names←'}'~⍨¨'{'A.Split names</code>
+<code> [8]       names←(0&lt;≢¨names)/names</code>
+<code> [9]       :For name :In names</code>
+<code> [10]          :Trap 0</code>
+<code> [11]              where←toc⍳⊂name</code>
+<code> [12]              :If (⍴toc)∨.&lt;where</code>
+<code> [13]                  where←(1 ⎕C locals[;1])⍳⊂name</code>
+<code> [14]                  ⍎('Invalid references found in INI file, check "',name,'"')Signal 6/⍨where∨.&gt;1⊃⍴locals</code>
+<code> [15]                  val2←DoubleQuotes⊃locals[where;2]</code>
+<code> [16]              :Else</code>
+<code> [17]                  val2←DoubleQuotes 2⊃ref._Data[where;]</code>
+<code> [18]              :EndIf</code>
+<code> [19]          :Else</code>
+<code> [20]              ⍎6 Signal⍨'Invalid references found in INI file, check "',name,'"'</code>
+<code> [21]          :EndTrap</code>
+<code> [22]          noOf←¯1+value⍳'{'</code>
+<code> [23]          value←(-noOf)⌽(⍕val2),({⍵↓⍨⍵⍳'}'}noOf⌽value)</code>
+<code> [24]      :EndFor</code>
+<code> [25]      value←'''',(1↓¯1↓value),''''</code>
+<code> [26]  :EndIf</code>
+<code> [27]  value←RestoreCurlies value</code>
+</div>
+<code class="header" id="listing_43">#.IniFiles.IniFiles.MergeImport &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (data remarks)←MergeImport(import data remarks)</code>
+<code> [1]   data←{(+\'['=⊃¨⍵)⊂⍵}data</code>
+<code> [2]   secList←⊃¨data</code>
+<code> [3]   :For section name value :In ↓import</code>
+<code> [4]       secName←'[',(⍕section),']'</code>
+<code> [5]       :If (⍴secList)&lt;ind←secList⍳⊂secName</code>
+<code> [6]           data,←⊂⊂secName</code>
+<code> [7]           secList,←⊂secName</code>
+<code> [8]           remarks,←⊂''</code>
+<code> [9]       :EndIf</code>
+<code> [10]      ind←secList⍳⊂secName</code>
+<code> [11]      :If 2=|≡value</code>
+<code> [12]          (ind⊃data),←⊂name,'='''''</code>
+<code> [13]          (ind⊃data),←(⊂name,',='),¨Pack¨value</code>
+<code> [14]      :Else</code>
+<code> [15]          (ind⊃data),←⊂name,'=',Pack value</code>
+<code> [16]      :EndIf</code>
+<code> [17]  :EndFor</code>
+<code> [18]  data←⊃,/SortSection¨data</code>
+<code> [19]  remarks←(⍴data)↑remarks,(⍴data)⍴⊂''</code>
+</div>
+<code class="header" id="listing_44">#.IniFiles.IniFiles.ExchangeDoubleCourlies &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←ExchangeDoubleCourlies(r what new)</code>
+<code> [1]     ⍝ Typical:</code>
+<code> [2]     ⍝ data ← RestoreCurlies ExchangeDoubleCourlies '{{abc}}' '{' (⎕UCS 0)</code>
+<code> [3]     ⍝ data ← RestoreCurlies ExchangeDoubleCourlies data '}' (⎕UCS 1)</code>
+<code> [4]     ⍝ '{abc}' ←→ RestoreCurlies data</code>
+<code> [5]  :While ∨/b←(2⍴what)⍷r</code>
+<code> [6]      ind←⊃⍸b</code>
+<code> [7]      r←(-ind-1)⌽new,2↓(ind-1)⌽r</code>
+<code> [8]  :EndWhile</code>
+</div>
+<code class="header" id="listing_45">#.IniFiles.IniFiles.EvaluateINIs &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (data oldStyleFlag remarks)←EvaluateINIs filenames</code>
+<code> [1]   data←'' ⋄ oldStyleFlag←⍬ ⋄ remarks←''</code>
+<code> [2]   :For this :In filenames</code>
+<code> [3]       :If 0=≢buffer←⊃⎕NGET this 1</code>
+<code> [4]           :Return</code>
+<code> [5]       :EndIf</code>
+<code> [6]       buffer←(,∘⊂⍣(⊃1=|≡buffer))buffer</code>
+<code> [7]       buffer←{(0=+/b←(⎕UCS 9)=w←⍵):w ⋄ (b/w)←' ' ⋄ w}¨buffer    ⍝ Transform TAB into blanks</code>
+<code> [8]       buffer~¨←⎕UCS 10                                          ⍝ Remove any LF characters</code>
+<code> [9]       buffer←{0 1∊⍨≡⍵:⊂⍵ ⋄ ⍵}buffer</code>
+<code> [10]          ⍝buffer←{(0&lt;∊⍴∘,¨⍵)⌿⍵}buffer  ⍝ No: in order to report line numbers we can't do this</code>
+<code> [11]      buffer2←↑,buffer</code>
+<code> [12]      bool←{a∨≠\a←⍵=''''}buffer2</code>
+<code> [13]      ((,bool)/,buffer2)←' '</code>
+<code> [14]      remarks2←(';'⍳⍨¨⊂[2]buffer2)↓¨buffer</code>
+<code> [15]      buffer←(¯1+';'⍳⍨¨⊂[2]buffer2)↑¨buffer</code>
+<code> [16]      buffer←RemoveInBetweenBlanks¨A.DLB A.DTB buffer</code>
+<code> [17]      (flag dm en)←CheckValues buffer this</code>
+<code> [18]      ⍎dm Signal en</code>
+<code> [19]      data,←buffer</code>
+<code> [20]      remarks,←remarks2</code>
+<code> [21]      oldStyleFlag,←flag</code>
+<code> [22]  :EndFor</code>
+<code> [23]  oldStyleFlag←∨/oldStyleFlag</code>
+</div>
+<code class="header" id="listing_46">#.IniFiles.IniFiles.CallCreate &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  CallCreate IniFilename</code>
+<code> [1]   :If 0 1∊⍨≡IniFilename</code>
+<code> [2]   :AndIf 0≠≢IniFilename</code>
+<code> [3]       IniFilename←,⊂IniFilename</code>
+<code> [4]   :EndIf</code>
+<code> [5]   :Trap (~_debugFlag)/911</code>
+<code> [6]       Create IniFilename</code>
+<code> [7]   :Else</code>
+<code> [8]       ⍎({(911≡⍵)∨⍬≡⍵:11 ⋄ ⍵}_EN)Signal⍨1⊃⎕DM</code>
+<code> [9]   :EndTrap</code>
+</div>
+<code class="header" id="listing_47">#.IniFiles.IniFiles.Timestamp2Float &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Timestamp2Float ts</code>
+<code> [1]     ⍝ yyyymmdd.hhmmss←Timestamp2Float ⎕TS</code>
+<code> [2]  r←{1E¯9×0 100 100 100 100 100 1000⊥7↑⍵}ts</code>
+</div>
+<code class="header" id="listing_48">#.IniFiles.IniFiles.type &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_49">#.IniFiles.IniFiles.extension &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<div id="footer">
+<hr>
+<p>Created by "CodeCoverage" version 0.10.2+52 from 2023-04-09</p>
+</div>
+
+</body>
+</html>
