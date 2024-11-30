@@ -19,5 +19,5 @@
   source: "APLSource/IniFiles.aplc",
   tags: "ini-files,config-files",
   userCommandScript: "",
-  version: "5.1.0+24",
+  version: "5.1.0+27",
 }
