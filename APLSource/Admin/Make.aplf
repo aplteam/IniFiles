@@ -1,4 +1,4 @@
- Make flag;M;C;path;zipFilename;res;version;cfg;parms
+ Make flag;M;C;path;zipFilename;res;cfg;parms;pkgCfgFilename
  :If flag
      :If 0=⎕SE.⎕NC'MakeHelpers'
          {}⎕SE.Tatin.LoadPackages'[tatin]MakeHelpers'⎕SE
@@ -6,13 +6,18 @@
      M←⎕SE.MakeHelpers
      C←##.CiderConfig
      path←C.HOME,'/',C.CIDER.distributionFolder
-     cfg←⎕JSON⍠('Dialect' 'JSON5')⊢⊃⎕NGET C.HOME,'/apl-package.json'
-     version←M.CompileVersionNumberPattern cfg
+     pkgCfgFilename←C.HOME,'/apl-package.json'
+     cfg←⎕JSON⍠('Dialect' 'JSON5')⊢⊃⎕NGET pkgCfgFilename
      M.RecreateFolder path
      parms←⎕SE.Tatin.CreateBuildParms C.HOME
      parms.targetPath←path
-     parms.version←version
-     zipFilename←⎕SE.Tatin.BuildPackage parms
-     ⎕←'*** New version build successfully:',M.CR,'   ',zipFilename
+     :If ⎕NULL≡cfg←pkgCfgFilename M.EditVersion cfg
+         ⍞←'Cancelled by user' ⋄ →0
+     :Else
+         parms.version←cfg.version
+         M.RecreateFolder path
+         zipFilename←⎕SE.Tatin.BuildPackage parms
+         ⎕←'*** New version build successfully:',M.CR,'   ',zipFilename
+     :EndIf
  :EndIf
  ⍝Done

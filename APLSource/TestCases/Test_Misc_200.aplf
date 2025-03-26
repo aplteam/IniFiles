@@ -1,0 +1,9 @@
+ R←Test_Misc_200(stopFlag batchFlag);⎕TRAP;filename;myIni;filename2
+⍝ Exercises "Version"
+ R←T._Failed
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+
+ →T.PassesIf 3=≢##.IniFiles.Version
+
+ R←T._OK
+ ⍝Done
