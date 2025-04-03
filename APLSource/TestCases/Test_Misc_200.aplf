@@ -3,7 +3,9 @@
  R←T._Failed
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
 
- →T.PassesIf 3=≢##.IniFiles.Version
+ →T.PassesIf 1=≡##.IniFiles.Version
+ →T.PassesIf' '=1↑0⍴##.IniFiles.Version
+ →T.PassesIf∧/⎕D∊⍨{⍵↑⍨¯1+⌊/⍵⍳'-+'}##.IniFiles.Version~'. '
 
  R←T._OK
  ⍝Done
