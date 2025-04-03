@@ -10,21 +10,38 @@
     ⎕IO←1 ⋄ ⎕ML←1
 
     ∇ r←Version
-      :Access Public shared
-      r←'OS' '3.1.1' '2021-05-08'
+      :Access Public Shared
+    ⍝ Returns the version number from `TatinVars` if possible.
+    ⍝ See also `History`
+      :If 0<⎕NC'TatinVars.CONFIG'
+          r←(⎕JSON⍠('Dialect' 'JSON5')⊢TatinVars.CONFIG).version
+      :ElseIf 0<##.⎕NC'TatinVars.CONFIG'
+          r←(⎕JSON⍠('Dialect' 'JSON5')⊢##.TatinVars.CONFIG).version
+      :Else
+    ⍝ When a script was not loaded with Tatin, there will be no namespace `TatinVars`.
+    ⍝ In such cases we cannot provide a version number, so we return just ''.
+          r←''
+      :EndIf
     ∇
 
     ∇ r←History
-      :Access Public shared     
-      ⍝ * 3.1.1 from 2023-05-08
+      :Access Public shared
+      ⍝ * 4.0.0 ⋄ 2025-03-28
+      ⍝   * `Version` has changed its syntax: it returns just a simple string with the version number now 
+      ⍝     which comes from the package config file.
+      ⍝   * `Make` improved.
+      ⍝ * 3.2.0 ⋄ 2024-12-25
+      ⍝   * The `Version` functions reports now what's defined in the package config file
+      ⍝   * Packages updated
+      ⍝ * 3.1.1 ⋄ 2023-05-08
       ⍝   * APLTreeUtils2 updated which was buggy (wrong version number)
-      ⍝ * 3.1.0 from 2023-05-02
+      ⍝ * 3.1.0 ⋄ 2023-05-02
       ⍝   * New method `GetTaskList` added
       ⍝   * `History now returns a useful result
-      ⍝ * 3.0.1 from 2021-03-01
+      ⍝ * 3.0.1 ⋄ 2021-03-01
       ⍝   * Package config file corrected (new format)
       ⍝   * APLTreeUtils2.Uppercase replaced by a call to 1 ⎕C
-      ⍝ * 3.0.0 from 2020-09-07
+      ⍝ * 3.0.0 ⋄ 2020-09-07
       ⍝   * Does not :Include APLTreeUtils anymore (but requires the class APLTreeUtils2)
       ⍝   * Uses ⎕ML←1 and  ⎕IO←1 internally
       ⍝   * Needs at least Dyalog 18.0
@@ -256,17 +273,18 @@
 
     ∇ (success rc result)←{adminFlag}WinExecBatch cmd;batFilename;tempFilename;en;more;parms;i;flag
     ⍝ This method executes a command and returns its standard output on `result`.\\
-    ⍝ ** Don't** use this for programs that interact with a user! For example, don't use
-    ⍝ this to fire up an APL session! This cannot work because standard output is redirected.\\
-    ⍝ Use `WinExecute` for this which cannot capture standard output itself.\\
+    ⍝ **Don't** use this for programs that interact with a user! For example, don't use this to
+    ⍝ fire up an interactive APL session; this cannot work because standard output is redirected.
+    ⍝ (Use `WinExecute` for this which cannot capture standard output itself)\\
     ⍝ Performes the following actions:
-    ⍝ * Puts `cmd` into a batch file which is a temp file.
-    ⍝ * Execute that batch file with `WinExecute`.
-    ⍝ * Circumvent the standard output of the batch file into another temp file.
-    ⍝ * Waits until the temp file makes an appearance.
+    ⍝ * Puts `cmd` into a batch file which is a temp file
+    ⍝ * Executes the batch file with `WinExecute`
+    ⍝ * Circumvent the standard output of the batch file into another temp file
+    ⍝ * Waits until the temp file makes an appearance
     ⍝ * Reads that temp file and returns the contents as `result`.\\
-    ⍝ * `success` is a Boolean with 1 indicating success.
-    ⍝ * `rc` is a return code. 42 stands for "okay".
+    ⍝
+    ⍝ * `success` is a Boolean with 1 indicating success
+    ⍝ * `rc` is a return code. 42 stands for "okay"
       :Access Public Shared
       'Runs under Windows only'Assert'Win'≡##.APLTreeUtils2.GetOperatingSystem ⍬
       tempFilename←GetTempFilename

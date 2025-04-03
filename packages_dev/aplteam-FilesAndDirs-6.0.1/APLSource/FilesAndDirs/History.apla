@@ -1,4 +1,10 @@
 (
+ '* 6.0.1 ⋄ 2025-03-30'
+ '  * The package required a dependency OS from a server https://localhost:444 rather than the Tatin registry'
+ '* 6.0.0 ⋄ 2025-03-28'
+ '  * Syntax change: `Version` returns now a simple string with the version number from the package config file.'
+ '  * Packages updated.'
+ '  * `Make` improved.  '
  '* 5.8.1 ⋄ 2024-08-12'
  '  * Bug fix: shy API-dfns returned a non-shy result'
  '* 5.8.0 ⋄ 2024-07-16'
@@ -21,7 +27,6 @@
  '  * Superfluous `ADOC_Dec` deleted'
  '  * Latest test helpers established'
  '  * Packages updated'
- '                    '
  '* 5.5.0 ⋄ 2023-04-20'
  '  * `ListFiles` does allow wildcard characters now even with "recursive"'
  '  * Bug fix: mistake in the documentation of ListDirs corrected regarding wildcard  characters'
