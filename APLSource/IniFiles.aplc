@@ -18,16 +18,19 @@
     ⍝ Returns the version number from TatinVars
     ⍝ When a script is not loaded with Tatin, there will be no namespace `TatinVars`.
     ⍝ In such cases we cannot provide a version number, so we return an empty char vector
-      r←'IniFiles' '' '2025-03-26'
+      r←''
       :If 0<⎕NC'TatinVars.CONFIG'
-          (2⊃r)←(⎕JSON⍠('Dialect' 'JSON5')⊢TatinVars.CONFIG).version
+          r←(⎕JSON⍠('Dialect' 'JSON5')⊢TatinVars.CONFIG).version
       :ElseIf 0<##.⎕NC'TatinVars.CONFIG'
-          (2⊃r)←(⎕JSON⍠('Dialect' 'JSON5')⊢##.TatinVars.CONFIG).version
+          r←(⎕JSON⍠('Dialect' 'JSON5')⊢##.TatinVars.CONFIG).version
       :EndIf
     ∇
 
     ∇ History
       :Access Public Shared
+      ⍝ * 6.0.0 ⋄ 2025-04-03
+      ⍝   * Potentially breaking change: `Version` now returns a char vector with version number from the package config file
+      ⍝   * Packages updated
       ⍝ * 5.2.0 ⋄ 2025-03-26
       ⍝   * Package updated (APLTreeUtils2)
       ⍝   * `Version` returns the version number from the package config file
